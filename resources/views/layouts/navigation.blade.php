@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('warehouses.index')" :active="request()->routeIs('warehouses.*')">
                         倉庫管理
                     </x-nav-link>
+                    <x-nav-link :href="route('suppliers.index')" :active="request()->routeIs('suppliers.*')">
+                        供應商管理
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -87,6 +90,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('warehouses.index')" :active="request()->routeIs('warehouses.*')">
                 倉庫管理
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('suppliers.index')" :active="request()->routeIs('suppliers.*')">
+                供應商管理
             </x-responsive-nav-link>
         </div>
 
