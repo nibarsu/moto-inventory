@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\WarehouseController;
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('customers', CustomerController::class);
+    Route::resource('parts', PartController::class);
     Route::resource('suppliers', SupplierController::class);
     Route::resource('warehouses', WarehouseController::class);
 

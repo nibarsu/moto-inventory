@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         商品分類
                     </x-nav-link>
+                    <x-nav-link :href="route('parts.index')" :active="request()->routeIs('parts.*')">
+                        零件商品管理
+                    </x-nav-link>
                     <x-nav-link :href="route('warehouses.index')" :active="request()->routeIs('warehouses.*')">
                         倉庫管理
                     </x-nav-link>
@@ -90,6 +93,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                 商品分類
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('parts.index')" :active="request()->routeIs('parts.*')">
+                零件商品管理
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('warehouses.index')" :active="request()->routeIs('warehouses.*')">
                 倉庫管理
