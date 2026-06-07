@@ -13,4 +13,11 @@ class Brand extends Model
         'remark',
         'is_active',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
+    }
 }

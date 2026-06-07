@@ -26,7 +26,7 @@ class BrandController extends Controller
 
         return redirect()
             ->route('brands.index')
-            ->with('success', '品牌新增成功');
+            ->with('success', '品牌已建立。');
     }
 
     public function show(Brand $brand)
@@ -45,7 +45,7 @@ class BrandController extends Controller
 
         return redirect()
             ->route('brands.index')
-            ->with('success', '品牌更新成功');
+            ->with('success', '品牌已更新。');
     }
 
     public function destroy(Brand $brand)
@@ -54,6 +54,6 @@ class BrandController extends Controller
 
         return redirect()
             ->route('brands.index')
-            ->with('success', '品牌刪除成功');
+            ->with('success', '品牌已刪除。');
     }
 }

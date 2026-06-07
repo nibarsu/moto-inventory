@@ -12,6 +12,13 @@ class UpdateBrandRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'is_active' => $this->boolean('is_active'),
+        ]);
+    }
+
     public function rules(): array
     {
         return [
@@ -19,27 +26,22 @@ class UpdateBrandRequest extends FormRequest
                 'required',
                 'string',
                 'max:30',
-                Rule::unique('brands', 'code')
-                    ->ignore($this->brand),
+                Rule::unique('brands', 'code')->ignore($this->brand),
             ],
-
             'name' => [
                 'required',
                 'string',
                 'max:100',
             ],
-
             'english_name' => [
                 'nullable',
                 'string',
                 'max:100',
             ],
-
             'remark' => [
                 'nullable',
                 'string',
             ],
-
             'is_active' => [
                 'boolean',
             ],
@@ -49,9 +51,9 @@ class UpdateBrandRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'code.required' => '請輸入品牌代碼',
-            'code.unique' => '品牌代碼已存在',
-            'name.required' => '請輸入品牌名稱',
+            'code.required' => '請輸入品牌代碼。',
+            'code.unique' => '品牌代碼已存在。',
+            'name.required' => '請輸入品牌名稱。',
         ];
     }
 }
