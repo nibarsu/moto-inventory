@@ -33,6 +33,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Vehicle
 - Stock base module
 - Purchase Order
+- Purchase Order Item
 
 ## Functional Scope
 
@@ -44,6 +45,7 @@ The current system provides:
 - Basic stock balance tracking per warehouse
 - Stock adjustment and stock movement history
 - Purchase order master management
+- Purchase order line item management with mixed part/vehicle support
 
 ## Main Domain Objects
 
@@ -55,6 +57,7 @@ The current system provides:
 - `Part`: part/consumable item master
 - `Vehicle`: complete vehicle master
 - `PurchaseOrder`: purchase order header/master
+- `PurchaseOrderItem`: purchase order line item snapshot
 - `PartStock`: part stock balance by warehouse
 - `VehicleStock`: vehicle stock balance by warehouse
 - `StockMovement`: stock transaction log
@@ -70,6 +73,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `customers`
 - `parts`
 - `purchase-orders`
+- `purchase-orders.items`
 - `suppliers`
 - `vehicles`
 - `warehouses`
@@ -104,6 +108,7 @@ All pages use the Breeze app layout and shared navigation.
 - Relationship-heavy models currently are `Part`, `Vehicle`, `Warehouse`, and stock models.
 - `Brand`, `Category`, `Supplier`, and `Customer` currently do not define reverse relationships, even though database relations exist indirectly through other tables.
 - Stock movement history uses a polymorphic-style structure with `item_type` + `item_id`, but it is implemented manually rather than through Laravel morph relations.
+- Purchase order items also use a manual `item_type` + `item_id` pattern so line items can reference either parts or vehicles while preserving item snapshots.
 
 ## Maintenance Notes
 

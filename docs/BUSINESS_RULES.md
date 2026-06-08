@@ -127,7 +127,7 @@ Example:
 ## Current Limitations
 
 - Stock module currently supports manual adjustment only.
-- Purchase order header exists, but purchase line items and receiving are not implemented yet.
+- Purchase order receiving and stock-in automation are not implemented yet.
 - There are no sales, transfer, or repair transaction modules yet.
 - No automatic stock reservation or safety stock alert logic is implemented.
 
@@ -149,4 +149,16 @@ Example:
   - `completed`
   - `cancelled`
 - `total_amount` must preserve the actual purchase amount and cannot be negative.
-- Purchase order currently acts as a header/master record only.
+- `total_amount` is synchronized from purchase order line totals.
+
+### Purchase Order Item
+
+- Purchase order items support two item families:
+  - `part`
+  - `vehicle`
+- User must choose one concrete item matching the selected `item_type`.
+- `quantity` must be at least 1.
+- `unit_price` cannot be negative.
+- `line_total` is calculated as `quantity * unit_price`.
+- `item_code` and `item_name` are stored on the line to preserve a snapshot of the selected item.
+- When a line is created, updated, or deleted, the parent purchase order `total_amount` must be recalculated from all line totals.

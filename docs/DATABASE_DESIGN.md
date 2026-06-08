@@ -224,6 +224,30 @@ Columns:
 - `created_by` nullable FK -> `users.id`, `nullOnDelete`
 - timestamps
 
+### `purchase_order_items`
+
+Purpose: stores purchase order line items for either parts or vehicles.
+
+Columns:
+
+- `id`
+- `purchase_order_id` FK -> `purchase_orders.id`, `cascadeOnDelete`
+- `item_type` string(20): expected values `part`, `vehicle`
+- `item_id` unsigned big integer
+- `item_code` nullable string(50)
+- `item_name` string(150)
+- `quantity` integer, default 1
+- `unit_price` decimal(12,2), default 0
+- `line_total` decimal(12,2), default 0
+- `remark` nullable
+- timestamps
+
+Notes:
+
+- `item_type + item_id` is a manual polymorphic reference.
+- `item_code` and `item_name` preserve a snapshot of the selected item at the time of line creation/update.
+- `line_total` is stored directly and synchronized from `quantity * unit_price` in application logic.
+
 ## Implemented Model Relationships
 
 ### `Part`
@@ -232,6 +256,7 @@ Columns:
 - belongs to `Category`
 - has many `PartStock`
 - has many filtered `StockMovement` where `item_type = part`
+- has many filtered `PurchaseOrderItem` where `item_type = part`
 
 ### `Vehicle`
 
@@ -239,6 +264,7 @@ Columns:
 - belongs to `Category`
 - has many `VehicleStock`
 - has many filtered `StockMovement` where `item_type = vehicle`
+- has many filtered `PurchaseOrderItem` where `item_type = vehicle`
 
 ### `Warehouse`
 
@@ -266,6 +292,11 @@ Columns:
 - belongs to `Supplier`
 - belongs to `Warehouse`
 - belongs to creator `User`
+- has many `PurchaseOrderItem`
+
+### `PurchaseOrderItem`
+
+- belongs to `PurchaseOrder`
 
 ## Relationship Diagram Summary
 
@@ -280,6 +311,7 @@ Columns:
 - `warehouses` -> `stock_movements`
 - `suppliers` -> `purchase_orders`
 - `warehouses` -> `purchase_orders`
+- `purchase_orders` -> `purchase_order_items`
 - `users` -> `stock_movements.created_by`
 - `users` -> `purchase_orders.created_by`
 
@@ -287,5 +319,5 @@ Columns:
 
 - `StockMovement` does not use true polymorphic Eloquent relations yet.
 - Reverse relationships from `Brand`, `Category`, `Supplier`, and `Customer` are not implemented in models.
-- Purchase order header exists, but purchase order item and receiving modules do not exist yet.
+- Purchase order receiving and inventory update flow do not exist yet.
 - There are no sales order, goods receipt, or delivery transaction tables yet.

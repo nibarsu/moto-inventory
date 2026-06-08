@@ -58,7 +58,7 @@
 ### 進貨管理
 
 * [x] Purchase Order
-* [ ] Purchase Order Item
+* [x] Purchase Order Item
 * [ ] 進貨入庫
 * [ ] 平均成本計算
 
