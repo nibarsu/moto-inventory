@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WarehouseController;
@@ -26,6 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('suppliers', SupplierController::class);
     Route::resource('vehicles', VehicleController::class);
     Route::resource('warehouses', WarehouseController::class);
+    Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
+    Route::get('stock-movements', [StockController::class, 'movements'])->name('stock-movements.index');
+    Route::get('stocks/adjust', [StockController::class, 'adjust'])->name('stocks.adjust');
+    Route::post('stocks/adjust', [StockController::class, 'updateAdjustment'])->name('stocks.update-adjustment');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
