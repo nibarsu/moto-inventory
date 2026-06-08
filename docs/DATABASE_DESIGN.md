@@ -7,6 +7,7 @@ The current database is organized around three groups:
 - master data tables
 - product tables
 - stock tables
+- purchase tables
 
 The system also relies on Laravel default `users`, `cache`, and `jobs` tables.
 
@@ -203,6 +204,26 @@ Notes:
 - `item_type + item_id` is a manual polymorphic reference.
 - There is no database-level FK from `item_id` to `parts` or `vehicles`.
 
+## Purchase Tables
+
+### `purchase_orders`
+
+Purpose: stores purchase order header/master data.
+
+Columns:
+
+- `id`
+- `po_no` unique, max 30
+- `order_date` date
+- `expected_date` nullable date
+- `supplier_id` FK -> `suppliers.id`, `restrictOnDelete`
+- `warehouse_id` FK -> `warehouses.id`, `restrictOnDelete`
+- `status` string(20), default `draft`
+- `total_amount` decimal(12,2), default 0
+- `remark` nullable
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
 ## Implemented Model Relationships
 
 ### `Part`
@@ -240,6 +261,12 @@ Notes:
 - belongs to `Warehouse`
 - belongs to creator `User`
 
+### `PurchaseOrder`
+
+- belongs to `Supplier`
+- belongs to `Warehouse`
+- belongs to creator `User`
+
 ## Relationship Diagram Summary
 
 - `brands` -> `parts`
@@ -251,10 +278,14 @@ Notes:
 - `warehouses` -> `part_stocks`
 - `warehouses` -> `vehicle_stocks`
 - `warehouses` -> `stock_movements`
+- `suppliers` -> `purchase_orders`
+- `warehouses` -> `purchase_orders`
 - `users` -> `stock_movements.created_by`
+- `users` -> `purchase_orders.created_by`
 
 ## Known Design Gaps
 
 - `StockMovement` does not use true polymorphic Eloquent relations yet.
 - Reverse relationships from `Brand`, `Category`, `Supplier`, and `Customer` are not implemented in models.
-- There are no inventory transaction source tables yet, such as purchase orders, sales orders, goods receipts, or delivery records.
+- Purchase order header exists, but purchase order item and receiving modules do not exist yet.
+- There are no sales order, goods receipt, or delivery transaction tables yet.

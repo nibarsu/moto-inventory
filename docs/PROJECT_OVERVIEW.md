@@ -32,6 +32,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Part
 - Vehicle
 - Stock base module
+- Purchase Order
 
 ## Functional Scope
 
@@ -42,6 +43,7 @@ The current system provides:
 - Product master data split into parts and vehicles
 - Basic stock balance tracking per warehouse
 - Stock adjustment and stock movement history
+- Purchase order master management
 
 ## Main Domain Objects
 
@@ -52,6 +54,7 @@ The current system provides:
 - `Customer`: customer master
 - `Part`: part/consumable item master
 - `Vehicle`: complete vehicle master
+- `PurchaseOrder`: purchase order header/master
 - `PartStock`: part stock balance by warehouse
 - `VehicleStock`: vehicle stock balance by warehouse
 - `StockMovement`: stock transaction log
@@ -66,6 +69,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `categories`
 - `customers`
 - `parts`
+- `purchase-orders`
 - `suppliers`
 - `vehicles`
 - `warehouses`

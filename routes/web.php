@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\VehicleController;
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('customers', CustomerController::class);
     Route::resource('parts', PartController::class);
+    Route::resource('purchase-orders', PurchaseOrderController::class);
     Route::resource('suppliers', SupplierController::class);
     Route::resource('vehicles', VehicleController::class);
     Route::resource('warehouses', WarehouseController::class);

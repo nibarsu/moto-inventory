@@ -127,5 +127,26 @@ Example:
 ## Current Limitations
 
 - Stock module currently supports manual adjustment only.
-- There are no purchase, sales, transfer, or repair transaction modules yet.
+- Purchase order header exists, but purchase line items and receiving are not implemented yet.
+- There are no sales, transfer, or repair transaction modules yet.
 - No automatic stock reservation or safety stock alert logic is implemented.
+
+## Purchase Rules
+
+### Purchase Order
+
+- Purchase order number must be unique.
+- Purchase order requires:
+  - order date
+  - supplier
+  - warehouse
+  - status
+  - total amount
+- `expected_date` is optional but cannot be earlier than `order_date`.
+- Current supported statuses are:
+  - `draft`
+  - `confirmed`
+  - `completed`
+  - `cancelled`
+- `total_amount` must preserve the actual purchase amount and cannot be negative.
+- Purchase order currently acts as a header/master record only.
