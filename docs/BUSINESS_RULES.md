@@ -1,0 +1,131 @@
+# Business Rules
+
+## Master Data
+
+### Brand
+
+- Brand code must be unique.
+- Brand name is required.
+- Brands support active/inactive status.
+
+### Category
+
+- Category code must be unique.
+- Category name is required.
+- Category type must be one of:
+  - `part`
+  - `vehicle`
+- Category type determines where it can be used.
+
+### Warehouse
+
+- Warehouse code must be unique.
+- Warehouse name is required.
+- Warehouses support active/inactive status.
+
+### Supplier
+
+- Supplier code must be unique.
+- Supplier name is required.
+- Email is optional but must be valid if provided.
+- Suppliers support active/inactive status.
+
+### Customer
+
+- Customer code must be unique.
+- Customer name is required.
+- Email is optional but must be valid if provided.
+- Customers support active/inactive status.
+
+## Product Rules
+
+### Part
+
+- `part_no` must be unique.
+- Part name is required.
+- Unit is required and defaults to `個`.
+- `last_cost_price`, `sale_price`, and `safety_stock` cannot be negative.
+- Brand is optional.
+- Category is optional, but if selected it must be a category with `type = part`.
+- Part product pages only use active brands and active part-type categories in the selection lists.
+
+### Vehicle
+
+- `model_code` must be unique.
+- Vehicle name is required.
+- `last_cost_price` and `sale_price` cannot be negative.
+- `year` is optional and limited to a reasonable year range in validation.
+- Brand is optional.
+- Category is optional, but if selected it must be a category with `type = vehicle`.
+- Vehicle product pages only use active brands and active vehicle-type categories in the selection lists.
+
+## Stock Rules
+
+### Stock Balance Tables
+
+- A part can have only one stock balance row per warehouse.
+- A vehicle can have only one stock balance row per warehouse.
+- Stock quantity is stored as the current balance, not only as transaction history.
+
+### Stock Movement
+
+- Stock movement supports two item families:
+  - `part`
+  - `vehicle`
+- Supported movement types are:
+  - `in`
+  - `out`
+  - `adjust`
+
+Current implemented workflow only uses:
+
+- `adjust`
+
+### Stock Adjustment
+
+- User must choose item type: `part` or `vehicle`.
+- User must choose one product matching the selected type.
+- User must choose one warehouse.
+- User enters the final target quantity, not the delta.
+- System calculates:
+  - `before_quantity`
+  - `after_quantity`
+  - `quantity` difference
+
+Example:
+
+- before = 10
+- adjusted target = 8
+- movement quantity = -2
+
+### Stock Adjustment Persistence
+
+- If no stock balance row exists yet for the selected item and warehouse, the system creates one with quantity 0 before adjustment.
+- Stock update and movement insert are executed inside a database transaction.
+- Movement record stores the acting user in `created_by` when authenticated.
+
+## Routing and Access
+
+- All management routes are behind `auth` middleware.
+- Dashboard additionally uses `verified`.
+- There is no public CRUD access for master data or stock functions.
+
+## UI Rules
+
+- CRUD pages follow the Breeze app layout.
+- `index` pages show server-rendered paginated tables for core master modules.
+- Stock query page currently aggregates part and vehicle stock into one list.
+- Stock movement page is paginated and sorted newest first.
+
+## Operational Assumptions
+
+- Parts and vehicles are separate masters because their attributes differ.
+- Categories are shared, but type-restricted.
+- Inventory is warehouse-based.
+- Stock movement history is intended to become the audit trail for future purchasing and sales workflows.
+
+## Current Limitations
+
+- Stock module currently supports manual adjustment only.
+- There are no purchase, sales, transfer, or repair transaction modules yet.
+- No automatic stock reservation or safety stock alert logic is implemented.
