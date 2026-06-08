@@ -7,10 +7,20 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 ## Current Stack
 
 - Laravel 12
+- PHP 8.3
+- MySQL 8
 - Laravel Breeze authentication scaffolding
 - Blade views with Breeze layout components
 - Eloquent ORM
-- MySQL-compatible schema design through Laravel migrations
+- GitHub
+
+## Documentation Map
+
+- [PROJECT_OVERVIEW.md](/c:/laragon/www/moto-inventory/docs/PROJECT_OVERVIEW.md)
+- [DATABASE_DESIGN.md](/c:/laragon/www/moto-inventory/docs/DATABASE_DESIGN.md)
+- [BUSINESS_RULES.md](/c:/laragon/www/moto-inventory/docs/BUSINESS_RULES.md)
+- [DEVELOPMENT_RULES.md](/c:/laragon/www/moto-inventory/docs/DEVELOPMENT_RULES.md)
+- [ROADMAP.md](/c:/laragon/www/moto-inventory/docs/ROADMAP.md)
 
 ## Completed Modules
 
