@@ -38,6 +38,11 @@ PowerShell output may display Chinese incorrectly.
 
 Always verify actual file contents before saving.
 
+PowerShell mojibake does not necessarily mean the file is corrupted.
+
+If VS Code displays Chinese correctly but terminal output is garbled,
+treat it as a terminal encoding issue first, not a file encoding issue.
+
 # Business Rules
 
 * Parts and Vehicles must remain separate tables.
