@@ -6,15 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class PurchaseOrder extends Model
+class PurchaseReceipt extends Model
 {
     protected $fillable = [
-        'po_no',
-        'order_date',
-        'expected_date',
+        'receipt_no',
+        'purchase_order_id',
+        'receipt_date',
         'supplier_id',
         'warehouse_id',
-        'status',
         'total_amount',
         'remark',
         'created_by',
@@ -23,13 +22,18 @@ class PurchaseOrder extends Model
     protected function casts(): array
     {
         return [
-            'order_date' => 'date',
-            'expected_date' => 'date',
-            'total_amount' => 'decimal:2',
+            'purchase_order_id' => 'integer',
+            'receipt_date' => 'date',
             'supplier_id' => 'integer',
             'warehouse_id' => 'integer',
+            'total_amount' => 'decimal:2',
             'created_by' => 'integer',
         ];
+    }
+
+    public function purchaseOrder(): BelongsTo
+    {
+        return $this->belongsTo(PurchaseOrder::class);
     }
 
     public function supplier(): BelongsTo
@@ -49,11 +53,6 @@ class PurchaseOrder extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(PurchaseOrderItem::class);
-    }
-
-    public function receipts(): HasMany
-    {
-        return $this->hasMany(PurchaseReceipt::class);
+        return $this->hasMany(PurchaseReceiptItem::class);
     }
 }

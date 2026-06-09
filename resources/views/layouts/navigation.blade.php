@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('purchase-orders.index')" :active="request()->routeIs('purchase-orders.*')">
                         進貨單管理
                     </x-nav-link>
+                    <x-nav-link :href="route('purchase-receipts.index')" :active="request()->routeIs('purchase-receipts.*')">
+                        進貨入庫
+                    </x-nav-link>
                     <x-nav-link :href="route('vehicles.index')" :active="request()->routeIs('vehicles.*')">
                         整車商品管理
                     </x-nav-link>
@@ -106,6 +109,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('purchase-orders.index')" :active="request()->routeIs('purchase-orders.*')">
                 進貨單管理
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('purchase-receipts.index')" :active="request()->routeIs('purchase-receipts.*')">
+                進貨入庫
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('vehicles.index')" :active="request()->routeIs('vehicles.*')">
                 整車商品管理

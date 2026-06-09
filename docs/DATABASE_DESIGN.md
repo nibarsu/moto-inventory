@@ -237,6 +237,7 @@ Columns:
 - `item_code` nullable string(50)
 - `item_name` string(150)
 - `quantity` integer, default 1
+- `received_quantity` integer, default 0
 - `unit_price` decimal(12,2), default 0
 - `line_total` decimal(12,2), default 0
 - `remark` nullable
@@ -248,6 +249,48 @@ Notes:
 - `item_code` and `item_name` preserve a snapshot of the selected item at the time of line creation/update.
 - `line_total` is stored directly and synchronized from `quantity * unit_price` in application logic.
 
+### `purchase_receipts`
+
+Purpose: stores purchase receiving headers linked to purchase orders.
+
+Columns:
+
+- `id`
+- `receipt_no` unique, max 30
+- `purchase_order_id` FK -> `purchase_orders.id`, `restrictOnDelete`
+- `receipt_date` date
+- `supplier_id` FK -> `suppliers.id`, `restrictOnDelete`
+- `warehouse_id` FK -> `warehouses.id`, `restrictOnDelete`
+- `total_amount` decimal(12,2), default 0
+- `remark` nullable
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
+### `purchase_receipt_items`
+
+Purpose: stores purchase receiving line items for either parts or vehicles.
+
+Columns:
+
+- `id`
+- `purchase_receipt_id` FK -> `purchase_receipts.id`, `cascadeOnDelete`
+- `purchase_order_item_id` nullable FK -> `purchase_order_items.id`, `nullOnDelete`
+- `item_type` string(20): expected values `part`, `vehicle`
+- `item_id` unsigned big integer
+- `item_code` nullable string(50)
+- `item_name` string(150)
+- `quantity` integer
+- `unit_cost` decimal(12,2), default 0
+- `line_total` decimal(12,2), default 0
+- `remark` nullable
+- timestamps
+
+Notes:
+
+- `item_type + item_id` is a manual polymorphic reference.
+- `item_code` and `item_name` preserve the received-item snapshot even if the master changes later.
+- `unit_cost` stores the actual purchase cost used for stock-in.
+
 ## Implemented Model Relationships
 
 ### `Part`
@@ -257,6 +300,7 @@ Notes:
 - has many `PartStock`
 - has many filtered `StockMovement` where `item_type = part`
 - has many filtered `PurchaseOrderItem` where `item_type = part`
+- has many filtered `PurchaseReceiptItem` where `item_type = part`
 
 ### `Vehicle`
 
@@ -265,12 +309,14 @@ Notes:
 - has many `VehicleStock`
 - has many filtered `StockMovement` where `item_type = vehicle`
 - has many filtered `PurchaseOrderItem` where `item_type = vehicle`
+- has many filtered `PurchaseReceiptItem` where `item_type = vehicle`
 
 ### `Warehouse`
 
 - has many `PartStock`
 - has many `VehicleStock`
 - has many `StockMovement`
+- has many `PurchaseReceipt`
 
 ### `PartStock`
 
@@ -297,6 +343,20 @@ Notes:
 ### `PurchaseOrderItem`
 
 - belongs to `PurchaseOrder`
+- has many `PurchaseReceiptItem`
+
+### `PurchaseReceipt`
+
+- belongs to `PurchaseOrder`
+- belongs to `Supplier`
+- belongs to `Warehouse`
+- belongs to creator `User`
+- has many `PurchaseReceiptItem`
+
+### `PurchaseReceiptItem`
+
+- belongs to `PurchaseReceipt`
+- belongs to `PurchaseOrderItem`
 
 ## Relationship Diagram Summary
 
@@ -312,12 +372,18 @@ Notes:
 - `suppliers` -> `purchase_orders`
 - `warehouses` -> `purchase_orders`
 - `purchase_orders` -> `purchase_order_items`
+- `purchase_orders` -> `purchase_receipts`
+- `suppliers` -> `purchase_receipts`
+- `warehouses` -> `purchase_receipts`
+- `purchase_receipts` -> `purchase_receipt_items`
+- `purchase_order_items` -> `purchase_receipt_items`
 - `users` -> `stock_movements.created_by`
 - `users` -> `purchase_orders.created_by`
+- `users` -> `purchase_receipts.created_by`
 
 ## Known Design Gaps
 
 - `StockMovement` does not use true polymorphic Eloquent relations yet.
 - Reverse relationships from `Brand`, `Category`, `Supplier`, and `Customer` are not implemented in models.
-- Purchase order receiving and inventory update flow do not exist yet.
+- Average cost calculation is not implemented yet.
 - There are no sales order, goods receipt, or delivery transaction tables yet.

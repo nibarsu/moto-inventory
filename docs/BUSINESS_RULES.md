@@ -127,7 +127,6 @@ Example:
 ## Current Limitations
 
 - Stock module currently supports manual adjustment only.
-- Purchase order receiving and stock-in automation are not implemented yet.
 - There are no sales, transfer, or repair transaction modules yet.
 - No automatic stock reservation or safety stock alert logic is implemented.
 
@@ -162,3 +161,21 @@ Example:
 - `line_total` is calculated as `quantity * unit_price`.
 - `item_code` and `item_name` are stored on the line to preserve a snapshot of the selected item.
 - When a line is created, updated, or deleted, the parent purchase order `total_amount` must be recalculated from all line totals.
+
+### Purchase Receipt
+
+- Purchase receipt must be linked to one purchase order.
+- Only purchase orders with remaining receivable quantity can be used for stock-in.
+- Cancelled purchase orders cannot be received.
+- Purchase receipt uses the purchase order warehouse as the stock-in warehouse.
+- Receipt line quantity must be greater than zero and cannot exceed the remaining quantity of the purchase order item.
+- Receipt line `unit_cost` stores the actual received cost amount.
+- Purchase receipt `total_amount` is synchronized from receipt line totals.
+- Each receipt line increases stock in the target warehouse and creates one `stock_movements` record with:
+  - `movement_type = in`
+  - `reference_type = purchase_receipt`
+- `received_quantity` on the purchase order item is accumulated from posted receipts.
+- After receipt posting:
+  - if all purchase order lines are fully received, purchase order status becomes `completed`
+  - otherwise purchase order status becomes `confirmed`
+- Received `unit_cost` updates the product `last_cost_price`.
