@@ -54,13 +54,16 @@
 * [x] 進貨入庫
 * [x] 平均成本計算
 
+### 銷貨管理
+
+* [x] Sales Order
+
 ---
 
 ## 進行中
 
 ### 銷貨管理
 
-* [ ] Sales Order
 * [ ] Sales Order Item
 * [ ] 銷貨出庫
 

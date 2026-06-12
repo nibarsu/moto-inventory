@@ -37,6 +37,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Purchase Order Item
 - Purchase Receipt
 - Average Cost Calculation
+- Sales Order
 
 ## Functional Scope
 
@@ -51,6 +52,7 @@ The current system provides:
 - Purchase order line item management with mixed part/vehicle support
 - Purchase receiving with stock-in posting and receipt history
 - Average cost tracking for parts and vehicles
+- Sales order master management
 
 ## Main Domain Objects
 
@@ -66,6 +68,7 @@ The current system provides:
 - `PurchaseReceipt`: purchase receiving header
 - `PurchaseReceiptItem`: purchase receiving line snapshot
 - `AverageCost`: derived product cost view based on stock and receipts
+- `SalesOrder`: sales order header/master
 - `PartStock`: part stock balance by warehouse
 - `VehicleStock`: vehicle stock balance by warehouse
 - `StockMovement`: stock transaction log
@@ -84,6 +87,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `purchase-orders.items`
 - `purchase-receipts`
 - `average-costs`
+- `sales-orders`
 - `suppliers`
 - `vehicles`
 - `warehouses`
@@ -118,6 +122,7 @@ All pages use the Breeze app layout and shared navigation.
 - Relationship-heavy models currently are `Part`, `Vehicle`, `Warehouse`, and stock models.
 - Purchasing transactions now flow through `PurchaseOrder`, `PurchaseOrderItem`, `PurchaseReceipt`, and `PurchaseReceiptItem`.
 - Average cost is stored on `Part` and `Vehicle` and recalculated during purchase receipt posting.
+- Sales workflow currently has sales order header management only; line items and stock-out are not implemented yet.
 - `Brand`, `Category`, `Supplier`, and `Customer` currently do not define reverse relationships, even though database relations exist indirectly through other tables.
 - Stock movement history uses a polymorphic-style structure with `item_type` + `item_id`, but it is implemented manually rather than through Laravel morph relations.
 - Purchase order items also use a manual `item_type` + `item_id` pattern so line items can reference either parts or vehicles while preserving item snapshots.

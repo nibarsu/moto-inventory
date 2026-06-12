@@ -8,6 +8,7 @@ The current database is organized around three groups:
 - product tables
 - stock tables
 - purchase tables
+- sales tables
 
 The system also relies on Laravel default `users`, `cache`, and `jobs` tables.
 
@@ -294,6 +295,26 @@ Notes:
 - `unit_cost` stores the actual purchase cost used for stock-in.
 - Average cost is recalculated onto the related product master during receipt posting.
 
+## Sales Tables
+
+### `sales_orders`
+
+Purpose: stores sales order header/master data.
+
+Columns:
+
+- `id`
+- `so_no` unique, max 30
+- `order_date` date
+- `delivery_date` nullable date
+- `customer_id` FK -> `customers.id`, `restrictOnDelete`
+- `warehouse_id` FK -> `warehouses.id`, `restrictOnDelete`
+- `status` string(20), default `draft`
+- `total_amount` decimal(12,2), default 0
+- `remark` nullable
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
 ## Implemented Model Relationships
 
 ### `Part`
@@ -361,6 +382,12 @@ Notes:
 - belongs to `PurchaseReceipt`
 - belongs to `PurchaseOrderItem`
 
+### `SalesOrder`
+
+- belongs to `Customer`
+- belongs to `Warehouse`
+- belongs to creator `User`
+
 ## Relationship Diagram Summary
 
 - `brands` -> `parts`
@@ -380,12 +407,15 @@ Notes:
 - `warehouses` -> `purchase_receipts`
 - `purchase_receipts` -> `purchase_receipt_items`
 - `purchase_order_items` -> `purchase_receipt_items`
+- `customers` -> `sales_orders`
+- `warehouses` -> `sales_orders`
 - `users` -> `stock_movements.created_by`
 - `users` -> `purchase_orders.created_by`
 - `users` -> `purchase_receipts.created_by`
+- `users` -> `sales_orders.created_by`
 
 ## Known Design Gaps
 
 - `StockMovement` does not use true polymorphic Eloquent relations yet.
 - Reverse relationships from `Brand`, `Category`, `Supplier`, and `Customer` are not implemented in models.
-- There are no sales order, goods receipt, or delivery transaction tables yet.
+- Sales order line items and stock-out transaction tables do not exist yet.

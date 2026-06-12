@@ -127,7 +127,7 @@ Example:
 ## Current Limitations
 
 - Stock module currently supports manual adjustment only.
-- There are no sales, transfer, or repair transaction modules yet.
+- Sales order line items, stock-out, transfer, and repair transaction modules are not implemented yet.
 - No automatic stock reservation or safety stock alert logic is implemented.
 
 ## Purchase Rules
@@ -190,3 +190,23 @@ Example:
 - If existing stock quantity is zero, average cost becomes the received `unit_cost`.
 - `last_cost_price` preserves the most recent received unit cost.
 - Average cost is stored with 4 decimal places to reduce forced rounding during cost accumulation.
+
+## Sales Rules
+
+### Sales Order
+
+- Sales order number must be unique.
+- Sales order requires:
+  - order date
+  - customer
+  - warehouse
+  - status
+  - total amount
+- `delivery_date` is optional but cannot be earlier than `order_date`.
+- Current supported statuses are:
+  - `draft`
+  - `confirmed`
+  - `completed`
+  - `cancelled`
+- `total_amount` must preserve the actual sales amount and cannot be negative.
+- Current phase only supports sales order header maintenance; line items and stock-out are not included yet.
