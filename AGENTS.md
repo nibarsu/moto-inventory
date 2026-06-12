@@ -90,6 +90,14 @@ Run:
 
 Both must pass.
 
+If a change affects frontend assets, Tailwind utility classes, Vite-managed JS/CSS, or shared Blade layout structure:
+
+Run:
+
+`npm run build`
+
+Do not assume Blade changes are visible in the browser until frontend assets are rebuilt.
+
 # Git Rules
 
 When module is completed:
@@ -128,6 +136,8 @@ Do not skip roadmap order unless explicitly instructed.
 Use Laravel Breeze Layout.
 
 Keep navigation consistent.
+
+When changing navigation, shared layouts, `resources/js`, `resources/css`, or Blade markup that introduces new Tailwind classes, rebuild frontend assets before treating the UI fix as complete.
 
 # AI Agent Instructions
 

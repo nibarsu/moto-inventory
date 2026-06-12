@@ -38,6 +38,12 @@ Expected page behavior:
 - `create` / `edit`: Breeze form components and validation error output
 - `show`: read-only detail page
 
+## Frontend Asset Rule
+
+- If a change touches `resources/js`, `resources/css`, shared layouts, navigation, or introduces new Tailwind utility classes in Blade, run `npm run build` before final verification.
+- Do not assume a Blade-only UI fix is visible in the browser until Vite assets are rebuilt.
+- If the UI still looks wrong after a code change, confirm whether the browser is using stale built assets before changing the implementation again.
+
 ## Route Pattern
 
 Standard modules use:
@@ -101,9 +107,10 @@ For consistency with the current team workflow:
 1. Add migration, model, controller, request, routes, and views.
 2. Run migration.
 3. Run `artisan route:list`.
-4. Verify syntax and Blade compilation if needed.
-5. Commit with a module-specific message.
-6. Push to remote.
+4. Run `npm run build` when frontend assets or Tailwind classes are affected.
+5. Verify syntax and Blade compilation if needed.
+6. Commit with a module-specific message.
+7. Push to remote.
 
 ## Known Codebase Notes
 
