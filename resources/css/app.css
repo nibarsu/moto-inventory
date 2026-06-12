@@ -1,3 +1,42 @@
+@import 'flatpickr/dist/flatpickr.css';
+@import 'tom-select/dist/css/tom-select.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .ts-wrapper.single .ts-control,
+    .flatpickr-input {
+        @apply min-h-[42px] rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+    }
+
+    .ts-wrapper.plugin-clear_button .clear-button {
+        @apply text-gray-400 hover:text-gray-600;
+    }
+
+    .ts-dropdown {
+        @apply rounded-md border border-gray-200 shadow-lg;
+    }
+
+    .ts-dropdown .active {
+        @apply bg-indigo-50 text-indigo-700;
+    }
+
+    .swal2-popup {
+        @apply rounded-xl;
+    }
+
+    .btn-danger,
+    .btn-secondary {
+        @apply inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold transition;
+    }
+
+    .btn-danger {
+        @apply bg-red-600 text-white hover:bg-red-500;
+    }
+
+    .btn-secondary {
+        @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+    }
+}
