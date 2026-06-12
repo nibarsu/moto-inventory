@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AverageCostController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
@@ -23,6 +24,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('average-costs', [AverageCostController::class, 'index'])->name('average-costs.index');
     Route::resource('brands', BrandController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('customers', CustomerController::class);

@@ -39,34 +39,34 @@
 * [x] Part 零件商品管理
 * [x] Vehicle 整車商品管理
 
----
-
-## 進行中
-
 ### 庫存管理
 
-* [ ] Part Stock
-* [ ] Vehicle Stock
-* [ ] Stock Movement
-* [ ] 庫存查詢
-* [ ] 庫存調整
-
----
-
-## 待開發
+* [x] Part Stock
+* [x] Vehicle Stock
+* [x] Stock Movement
+* [x] 庫存查詢
+* [x] 庫存調整
 
 ### 進貨管理
 
 * [x] Purchase Order
 * [x] Purchase Order Item
 * [x] 進貨入庫
-* [ ] 平均成本計算
+* [x] 平均成本計算
+
+---
+
+## 進行中
 
 ### 銷貨管理
 
 * [ ] Sales Order
 * [ ] Sales Order Item
 * [ ] 銷貨出庫
+
+---
+
+## 待開發
 
 ### 報表系統
 

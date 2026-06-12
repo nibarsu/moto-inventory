@@ -94,8 +94,8 @@ class PurchaseReceiptController extends Controller
                 ]);
 
                 $purchaseOrderItem->increment('received_quantity', $quantityReceived);
+                $this->updateCostPrices($purchaseOrderItem->item_type, $purchaseOrderItem->item_id, $quantityReceived, $unitCost);
                 $this->increaseStock($purchaseOrderItem->item_type, $purchaseOrderItem->item_id, $purchaseOrder->warehouse_id, $quantityReceived, $receipt, $request->validated()['remark'] ?? null, $request->user()?->id);
-                $this->updateLastCostPrice($purchaseOrderItem->item_type, $purchaseOrderItem->item_id, $unitCost);
 
                 $totalAmount += $lineTotal;
             }
@@ -197,19 +197,57 @@ class PurchaseReceiptController extends Controller
         ]);
     }
 
-    private function updateLastCostPrice(string $itemType, int $itemId, float $unitCost): void
+    private function updateCostPrices(string $itemType, int $itemId, int $quantityReceived, float $unitCost): void
     {
         if ($itemType === 'part') {
-            Part::whereKey($itemId)->update([
+            $part = Part::withSum('stocks as total_stock_quantity', 'quantity')->findOrFail($itemId);
+            $averageCost = $this->calculateAverageCost(
+                (int) ($part->total_stock_quantity ?? 0),
+                (float) $part->average_cost_price,
+                $quantityReceived,
+                $unitCost
+            );
+
+            $part->update([
                 'last_cost_price' => $unitCost,
+                'average_cost_price' => $averageCost,
             ]);
 
             return;
         }
 
-        Vehicle::whereKey($itemId)->update([
+        $vehicle = Vehicle::withSum('stocks as total_stock_quantity', 'quantity')->findOrFail($itemId);
+        $averageCost = $this->calculateAverageCost(
+            (int) ($vehicle->total_stock_quantity ?? 0),
+            (float) $vehicle->average_cost_price,
+            $quantityReceived,
+            $unitCost
+        );
+
+        $vehicle->update([
             'last_cost_price' => $unitCost,
+            'average_cost_price' => $averageCost,
         ]);
+    }
+
+    private function calculateAverageCost(int $currentQuantity, float $currentAverageCost, int $receivedQuantity, float $receivedUnitCost): float
+    {
+        $currentQuantity = max(0, $currentQuantity);
+        $receivedQuantity = max(0, $receivedQuantity);
+        $newTotalQuantity = $currentQuantity + $receivedQuantity;
+
+        if ($newTotalQuantity === 0) {
+            return 0;
+        }
+
+        if ($currentQuantity === 0) {
+            return round($receivedUnitCost, 4);
+        }
+
+        $currentAmount = $currentQuantity * $currentAverageCost;
+        $receivedAmount = $receivedQuantity * $receivedUnitCost;
+
+        return round(($currentAmount + $receivedAmount) / $newTotalQuantity, 4);
     }
 
     private function syncPurchaseOrderStatus(PurchaseOrder $purchaseOrder): void

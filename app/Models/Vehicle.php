@@ -18,6 +18,7 @@ class Vehicle extends Model
         'color',
         'engine_displacement',
         'last_cost_price',
+        'average_cost_price',
         'sale_price',
         'remark',
         'is_active',
@@ -28,6 +29,7 @@ class Vehicle extends Model
         return [
             'year' => 'integer',
             'last_cost_price' => 'decimal:2',
+            'average_cost_price' => 'decimal:4',
             'sale_price' => 'decimal:2',
             'is_active' => 'boolean',
         ];

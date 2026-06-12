@@ -179,3 +179,14 @@ Example:
   - if all purchase order lines are fully received, purchase order status becomes `completed`
   - otherwise purchase order status becomes `confirmed`
 - Received `unit_cost` updates the product `last_cost_price`.
+
+### Average Cost Calculation
+
+- Parts and vehicles each maintain their own `average_cost_price`.
+- Average cost is recalculated only from purchase receipt posting in the current phase.
+- Current formula is weighted average:
+  - `(existing stock quantity * existing average cost + received quantity * received unit cost) / new total quantity`
+- The calculation uses total stock across all warehouses for the product before the new receipt quantity is added.
+- If existing stock quantity is zero, average cost becomes the received `unit_cost`.
+- `last_cost_price` preserves the most recent received unit cost.
+- Average cost is stored with 4 decimal places to reduce forced rounding during cost accumulation.

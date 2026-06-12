@@ -16,6 +16,7 @@ class Part extends Model
         'category_id',
         'unit',
         'last_cost_price',
+        'average_cost_price',
         'sale_price',
         'safety_stock',
         'remark',
@@ -26,6 +27,7 @@ class Part extends Model
     {
         return [
             'last_cost_price' => 'decimal:2',
+            'average_cost_price' => 'decimal:4',
             'sale_price' => 'decimal:2',
             'safety_stock' => 'integer',
             'is_active' => 'boolean',

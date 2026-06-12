@@ -110,6 +110,7 @@ Columns:
 - `category_id` nullable FK -> `categories.id`, `nullOnDelete`
 - `unit` max 20, default `個`
 - `last_cost_price` decimal(12,2), default 0
+- `average_cost_price` decimal(12,4), default 0
 - `sale_price` decimal(12,2), default 0
 - `safety_stock` integer, default 0
 - `remark` nullable
@@ -136,6 +137,7 @@ Columns:
 - `color` nullable, max 50
 - `engine_displacement` nullable, max 50
 - `last_cost_price` decimal(12,2), default 0
+- `average_cost_price` decimal(12,4), default 0
 - `sale_price` decimal(12,2), default 0
 - `remark` nullable
 - `is_active` boolean, default true
@@ -290,6 +292,7 @@ Notes:
 - `item_type + item_id` is a manual polymorphic reference.
 - `item_code` and `item_name` preserve the received-item snapshot even if the master changes later.
 - `unit_cost` stores the actual purchase cost used for stock-in.
+- Average cost is recalculated onto the related product master during receipt posting.
 
 ## Implemented Model Relationships
 
@@ -385,5 +388,4 @@ Notes:
 
 - `StockMovement` does not use true polymorphic Eloquent relations yet.
 - Reverse relationships from `Brand`, `Category`, `Supplier`, and `Customer` are not implemented in models.
-- Average cost calculation is not implemented yet.
 - There are no sales order, goods receipt, or delivery transaction tables yet.
