@@ -66,4 +66,10 @@ class Part extends Model
         return $this->hasMany(PurchaseReceiptItem::class, 'item_id')
             ->where('item_type', 'part');
     }
+
+    public function salesOrderItems(): HasMany
+    {
+        return $this->hasMany(SalesOrderItem::class, 'item_id')
+            ->where('item_type', 'part');
+    }
 }

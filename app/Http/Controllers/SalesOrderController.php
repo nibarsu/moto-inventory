@@ -36,12 +36,12 @@ class SalesOrderController extends Controller
 
         return redirect()
             ->route('sales-orders.index')
-            ->with('success', '銷貨單已建立。');
+            ->with('success', '銷貨單已新增。');
     }
 
     public function show(SalesOrder $salesOrder)
     {
-        $salesOrder->load(['customer', 'warehouse', 'creator']);
+        $salesOrder->load(['customer', 'warehouse', 'creator', 'items']);
 
         return view('sales-orders.show', compact('salesOrder'));
     }

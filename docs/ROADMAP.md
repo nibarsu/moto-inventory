@@ -6,12 +6,12 @@
 
 技術架構：
 
-* Laravel 12
-* PHP 8.3
-* MySQL 8
-* Laravel Breeze
-* Bootstrap 5
-* GitHub
+- Laravel 12
+- PHP 8.3
+- MySQL 8
+- Laravel Breeze
+- Bootstrap 5
+- GitHub
 
 ---
 
@@ -19,44 +19,45 @@
 
 ### 基礎架構
 
-* [x] Laravel 12 環境建置
-* [x] Laragon 開發環境
-* [x] MySQL 資料庫
-* [x] Laravel Breeze 登入系統
-* [x] Git 版本控制
-* [x] GitHub Repository
+- [x] Laravel 12 環境建置
+- [x] Laragon 開發環境
+- [x] MySQL 資料庫
+- [x] Laravel Breeze 登入系統
+- [x] Git 版本控制
+- [x] GitHub Repository
 
 ### 基本資料管理
 
-* [x] Brand 品牌管理
-* [x] Category 商品分類管理
-* [x] Warehouse 倉庫管理
-* [x] Supplier 供應商管理
-* [x] Customer 客戶管理
+- [x] Brand 品牌管理
+- [x] Category 商品分類管理
+- [x] Warehouse 倉庫管理
+- [x] Supplier 供應商管理
+- [x] Customer 客戶管理
 
 ### 商品管理
 
-* [x] Part 零件商品管理
-* [x] Vehicle 整車商品管理
+- [x] Part 零件商品管理
+- [x] Vehicle 整車商品管理
 
 ### 庫存管理
 
-* [x] Part Stock
-* [x] Vehicle Stock
-* [x] Stock Movement
-* [x] 庫存查詢
-* [x] 庫存調整
+- [x] Part Stock
+- [x] Vehicle Stock
+- [x] Stock Movement
+- [x] 庫存查詢
+- [x] 庫存調整
 
 ### 進貨管理
 
-* [x] Purchase Order
-* [x] Purchase Order Item
-* [x] 進貨入庫
-* [x] 平均成本計算
+- [x] Purchase Order
+- [x] Purchase Order Item
+- [x] 進貨入庫
+- [x] 平均成本計算
 
 ### 銷貨管理
 
-* [x] Sales Order
+- [x] Sales Order
+- [x] Sales Order Item
 
 ---
 
@@ -64,8 +65,7 @@
 
 ### 銷貨管理
 
-* [ ] Sales Order Item
-* [ ] 銷貨出庫
+- [ ] 銷貨出庫
 
 ---
 
@@ -73,9 +73,9 @@
 
 ### 報表系統
 
-* [ ] 庫存報表
-* [ ] 進貨報表
-* [ ] 銷貨報表
+- [ ] 庫存報表
+- [ ] 進貨報表
+- [ ] 銷貨報表
 
 ---
 
@@ -83,22 +83,22 @@
 
 ### 維修管理
 
-* [ ] 維修工單
-* [ ] 保養紀錄
-* [ ] 車主歷史紀錄
+- [ ] 維修工單
+- [ ] 保養紀錄
+- [ ] 車主歷史紀錄
 
 ### 財務管理
 
-* [ ] 應收帳款
-* [ ] 應付帳款
+- [ ] 應收帳款
+- [ ] 應付帳款
 
 ### 其他功能
 
-* [ ] 條碼列印
-* [ ] 條碼掃描
-* [ ] 匯入商品
-* [ ] 匯出 Excel
-* [ ] 權限管理
+- [ ] 條碼列印
+- [ ] 條碼掃描
+- [ ] 匯入商品
+- [ ] 匯出 Excel
+- [ ] 權限管理
 
 ---
 

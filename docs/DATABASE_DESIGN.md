@@ -2,7 +2,7 @@
 
 ## Overview
 
-The current database is organized around three groups:
+The database is currently organized around:
 
 - master data tables
 - product tables
@@ -10,15 +10,11 @@ The current database is organized around three groups:
 - purchase tables
 - sales tables
 
-The system also relies on Laravel default `users`, `cache`, and `jobs` tables.
+Laravel default tables such as `users`, `cache`, and `jobs` are also present.
 
 ## Master Data Tables
 
 ### `brands`
-
-Purpose: stores brand master data for parts and vehicles.
-
-Columns:
 
 - `id`
 - `code` unique, max 30
@@ -30,23 +26,15 @@ Columns:
 
 ### `categories`
 
-Purpose: shared category master for both parts and vehicles.
-
-Columns:
-
 - `id`
 - `code` unique, max 30
 - `name` max 100
-- `type` enum: `part`, `vehicle`
+- `type` enum-style value: `part`, `vehicle`
 - `remark` nullable
 - `is_active` boolean, default true
 - timestamps
 
 ### `warehouses`
-
-Purpose: warehouse/location master used by stock modules.
-
-Columns:
 
 - `id`
 - `code` unique, max 30
@@ -59,10 +47,6 @@ Columns:
 - timestamps
 
 ### `suppliers`
-
-Purpose: supplier master.
-
-Columns:
 
 - `id`
 - `code` unique, max 30
@@ -78,10 +62,6 @@ Columns:
 - timestamps
 
 ### `customers`
-
-Purpose: customer master.
-
-Columns:
 
 - `id`
 - `code` unique, max 30
@@ -99,10 +79,6 @@ Columns:
 
 ### `parts`
 
-Purpose: stores part and consumable item master data.
-
-Columns:
-
 - `id`
 - `part_no` unique, max 50
 - `barcode` nullable, max 50
@@ -118,15 +94,7 @@ Columns:
 - `is_active` boolean, default true
 - timestamps
 
-Notes:
-
-- `category_id` is intended to point only to categories with `type = part`.
-
 ### `vehicles`
-
-Purpose: stores complete vehicle product master data.
-
-Columns:
 
 - `id`
 - `model_code` unique, max 50
@@ -144,17 +112,9 @@ Columns:
 - `is_active` boolean, default true
 - timestamps
 
-Notes:
-
-- `category_id` is intended to point only to categories with `type = vehicle`.
-
 ## Stock Tables
 
 ### `part_stocks`
-
-Purpose: current part stock balance by warehouse.
-
-Columns:
 
 - `id`
 - `part_id` FK -> `parts.id`, `cascadeOnDelete`
@@ -162,15 +122,11 @@ Columns:
 - `quantity` integer, default 0
 - timestamps
 
-Constraints:
+Constraint:
 
 - unique key on `part_id + warehouse_id`
 
 ### `vehicle_stocks`
-
-Purpose: current vehicle stock balance by warehouse.
-
-Columns:
 
 - `id`
 - `vehicle_id` FK -> `vehicles.id`, `cascadeOnDelete`
@@ -178,21 +134,17 @@ Columns:
 - `quantity` integer, default 0
 - timestamps
 
-Constraints:
+Constraint:
 
 - unique key on `vehicle_id + warehouse_id`
 
 ### `stock_movements`
 
-Purpose: stock movement history table for both parts and vehicles.
-
-Columns:
-
 - `id`
-- `item_type` string(20): expected values `part`, `vehicle`
+- `item_type` string(20): `part`, `vehicle`
 - `item_id` unsigned big integer
 - `warehouse_id` FK -> `warehouses.id`, `cascadeOnDelete`
-- `movement_type` string(20): expected values `in`, `out`, `adjust`
+- `movement_type` string(20): `in`, `out`, `adjust`
 - `quantity` integer
 - `before_quantity` integer, default 0
 - `after_quantity` integer, default 0
@@ -202,18 +154,9 @@ Columns:
 - `created_by` nullable FK -> `users.id`, `nullOnDelete`
 - timestamps
 
-Notes:
-
-- `item_type + item_id` is a manual polymorphic reference.
-- There is no database-level FK from `item_id` to `parts` or `vehicles`.
-
 ## Purchase Tables
 
 ### `purchase_orders`
-
-Purpose: stores purchase order header/master data.
-
-Columns:
 
 - `id`
 - `po_no` unique, max 30
@@ -229,13 +172,9 @@ Columns:
 
 ### `purchase_order_items`
 
-Purpose: stores purchase order line items for either parts or vehicles.
-
-Columns:
-
 - `id`
 - `purchase_order_id` FK -> `purchase_orders.id`, `cascadeOnDelete`
-- `item_type` string(20): expected values `part`, `vehicle`
+- `item_type` string(20): `part`, `vehicle`
 - `item_id` unsigned big integer
 - `item_code` nullable string(50)
 - `item_name` string(150)
@@ -246,17 +185,7 @@ Columns:
 - `remark` nullable
 - timestamps
 
-Notes:
-
-- `item_type + item_id` is a manual polymorphic reference.
-- `item_code` and `item_name` preserve a snapshot of the selected item at the time of line creation/update.
-- `line_total` is stored directly and synchronized from `quantity * unit_price` in application logic.
-
 ### `purchase_receipts`
-
-Purpose: stores purchase receiving headers linked to purchase orders.
-
-Columns:
 
 - `id`
 - `receipt_no` unique, max 30
@@ -271,14 +200,10 @@ Columns:
 
 ### `purchase_receipt_items`
 
-Purpose: stores purchase receiving line items for either parts or vehicles.
-
-Columns:
-
 - `id`
 - `purchase_receipt_id` FK -> `purchase_receipts.id`, `cascadeOnDelete`
 - `purchase_order_item_id` nullable FK -> `purchase_order_items.id`, `nullOnDelete`
-- `item_type` string(20): expected values `part`, `vehicle`
+- `item_type` string(20): `part`, `vehicle`
 - `item_id` unsigned big integer
 - `item_code` nullable string(50)
 - `item_name` string(150)
@@ -288,20 +213,9 @@ Columns:
 - `remark` nullable
 - timestamps
 
-Notes:
-
-- `item_type + item_id` is a manual polymorphic reference.
-- `item_code` and `item_name` preserve the received-item snapshot even if the master changes later.
-- `unit_cost` stores the actual purchase cost used for stock-in.
-- Average cost is recalculated onto the related product master during receipt posting.
-
 ## Sales Tables
 
 ### `sales_orders`
-
-Purpose: stores sales order header/master data.
-
-Columns:
 
 - `id`
 - `so_no` unique, max 30
@@ -315,6 +229,20 @@ Columns:
 - `created_by` nullable FK -> `users.id`, `nullOnDelete`
 - timestamps
 
+### `sales_order_items`
+
+- `id`
+- `sales_order_id` FK -> `sales_orders.id`, `cascadeOnDelete`
+- `item_type` string(20): `part`, `vehicle`
+- `item_id` unsigned big integer
+- `item_code` nullable string(50)
+- `item_name` string(150)
+- `quantity` integer, default 1
+- `unit_price` decimal(12,2), default 0
+- `line_total` decimal(12,2), default 0
+- `remark` nullable
+- timestamps
+
 ## Implemented Model Relationships
 
 ### `Part`
@@ -325,6 +253,7 @@ Columns:
 - has many filtered `StockMovement` where `item_type = part`
 - has many filtered `PurchaseOrderItem` where `item_type = part`
 - has many filtered `PurchaseReceiptItem` where `item_type = part`
+- has many filtered `SalesOrderItem` where `item_type = part`
 
 ### `Vehicle`
 
@@ -334,6 +263,7 @@ Columns:
 - has many filtered `StockMovement` where `item_type = vehicle`
 - has many filtered `PurchaseOrderItem` where `item_type = vehicle`
 - has many filtered `PurchaseReceiptItem` where `item_type = vehicle`
+- has many filtered `SalesOrderItem` where `item_type = vehicle`
 
 ### `Warehouse`
 
@@ -342,32 +272,12 @@ Columns:
 - has many `StockMovement`
 - has many `PurchaseReceipt`
 
-### `PartStock`
-
-- belongs to `Part`
-- belongs to `Warehouse`
-
-### `VehicleStock`
-
-- belongs to `Vehicle`
-- belongs to `Warehouse`
-
-### `StockMovement`
-
-- belongs to `Warehouse`
-- belongs to creator `User`
-
 ### `PurchaseOrder`
 
 - belongs to `Supplier`
 - belongs to `Warehouse`
 - belongs to creator `User`
 - has many `PurchaseOrderItem`
-
-### `PurchaseOrderItem`
-
-- belongs to `PurchaseOrder`
-- has many `PurchaseReceiptItem`
 
 ### `PurchaseReceipt`
 
@@ -377,18 +287,18 @@ Columns:
 - belongs to creator `User`
 - has many `PurchaseReceiptItem`
 
-### `PurchaseReceiptItem`
-
-- belongs to `PurchaseReceipt`
-- belongs to `PurchaseOrderItem`
-
 ### `SalesOrder`
 
 - belongs to `Customer`
 - belongs to `Warehouse`
 - belongs to creator `User`
+- has many `SalesOrderItem`
 
-## Relationship Diagram Summary
+### `SalesOrderItem`
+
+- belongs to `SalesOrder`
+
+## Relationship Summary
 
 - `brands` -> `parts`
 - `brands` -> `vehicles`
@@ -403,19 +313,12 @@ Columns:
 - `warehouses` -> `purchase_orders`
 - `purchase_orders` -> `purchase_order_items`
 - `purchase_orders` -> `purchase_receipts`
-- `suppliers` -> `purchase_receipts`
-- `warehouses` -> `purchase_receipts`
 - `purchase_receipts` -> `purchase_receipt_items`
-- `purchase_order_items` -> `purchase_receipt_items`
 - `customers` -> `sales_orders`
-- `warehouses` -> `sales_orders`
-- `users` -> `stock_movements.created_by`
-- `users` -> `purchase_orders.created_by`
-- `users` -> `purchase_receipts.created_by`
-- `users` -> `sales_orders.created_by`
+- `sales_orders` -> `sales_order_items`
 
 ## Known Design Gaps
 
-- `StockMovement` does not use true polymorphic Eloquent relations yet.
-- Reverse relationships from `Brand`, `Category`, `Supplier`, and `Customer` are not implemented in models.
-- Sales order line items and stock-out transaction tables do not exist yet.
+- `StockMovement` still uses manual `item_type + item_id` instead of true Eloquent morph relations.
+- Reverse relationships on some master models are still intentionally minimal.
+- Sales stock-out transaction tables are not implemented yet.

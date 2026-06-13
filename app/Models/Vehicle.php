@@ -67,4 +67,10 @@ class Vehicle extends Model
         return $this->hasMany(PurchaseReceiptItem::class, 'item_id')
             ->where('item_type', 'vehicle');
     }
+
+    public function salesOrderItems(): HasMany
+    {
+        return $this->hasMany(SalesOrderItem::class, 'item_id')
+            ->where('item_type', 'vehicle');
+    }
 }

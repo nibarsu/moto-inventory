@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently focuses on master data management and stock foundation management for common dealership entities.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, purchasing, average cost tracking, and sales order entry.
 
 ## Current Stack
 
@@ -11,8 +11,9 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - MySQL 8
 - Laravel Breeze authentication scaffolding
 - Blade views with Breeze layout components
+- Tailwind CSS / Vite build pipeline
 - Eloquent ORM
-- GitHub
+- Git / GitHub
 
 ## Documentation Map
 
@@ -38,6 +39,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Purchase Receipt
 - Average Cost Calculation
 - Sales Order
+- Sales Order Item
 
 ## Functional Scope
 
@@ -48,11 +50,10 @@ The current system provides:
 - Product master data split into parts and vehicles
 - Basic stock balance tracking per warehouse
 - Stock adjustment and stock movement history
-- Purchase order master management
-- Purchase order line item management with mixed part/vehicle support
+- Purchase order header and line maintenance
 - Purchase receiving with stock-in posting and receipt history
 - Average cost tracking for parts and vehicles
-- Sales order master management
+- Sales order header and line maintenance
 
 ## Main Domain Objects
 
@@ -63,15 +64,15 @@ The current system provides:
 - `Customer`: customer master
 - `Part`: part/consumable item master
 - `Vehicle`: complete vehicle master
+- `PartStock`: part stock balance by warehouse
+- `VehicleStock`: vehicle stock balance by warehouse
+- `StockMovement`: stock transaction log
 - `PurchaseOrder`: purchase order header/master
 - `PurchaseOrderItem`: purchase order line item snapshot
 - `PurchaseReceipt`: purchase receiving header
 - `PurchaseReceiptItem`: purchase receiving line snapshot
-- `AverageCost`: derived product cost view based on stock and receipts
 - `SalesOrder`: sales order header/master
-- `PartStock`: part stock balance by warehouse
-- `VehicleStock`: vehicle stock balance by warehouse
-- `StockMovement`: stock transaction log
+- `SalesOrderItem`: sales order line item snapshot
 
 ## Route Structure
 
@@ -86,14 +87,15 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `purchase-orders`
 - `purchase-orders.items`
 - `purchase-receipts`
-- `average-costs`
 - `sales-orders`
+- `sales-orders.items`
 - `suppliers`
 - `vehicles`
 - `warehouses`
 
-### Stock routes
+### Utility routes
 
+- `GET /average-costs`
 - `GET /stocks`
 - `GET /stock-movements`
 - `GET /stocks/adjust`
@@ -101,38 +103,32 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 
 ## View Structure
 
-Each CRUD module follows the same Blade structure under `resources/views/<module>`:
+Each CRUD-style module follows Breeze layout patterns under `resources/views/<module>`.
 
-- `index.blade.php`
-- `create.blade.php`
-- `edit.blade.php`
-- `show.blade.php`
+Examples:
 
-Stock module views live under `resources/views/stocks`:
-
-- `index.blade.php`
-- `movements.blade.php`
-- `adjust.blade.php`
-
-All pages use the Breeze app layout and shared navigation.
+- `resources/views/brands`
+- `resources/views/purchase-orders`
+- `resources/views/purchase-order-items`
+- `resources/views/sales-orders`
+- `resources/views/sales-order-items`
+- `resources/views/stocks`
 
 ## Current Architectural Notes
 
-- Master data models mostly expose fillable fields and casts.
-- Relationship-heavy models currently are `Part`, `Vehicle`, `Warehouse`, and stock models.
-- Purchasing transactions now flow through `PurchaseOrder`, `PurchaseOrderItem`, `PurchaseReceipt`, and `PurchaseReceiptItem`.
-- Average cost is stored on `Part` and `Vehicle` and recalculated during purchase receipt posting.
-- Sales workflow currently has sales order header management only; line items and stock-out are not implemented yet.
-- `Brand`, `Category`, `Supplier`, and `Customer` currently do not define reverse relationships, even though database relations exist indirectly through other tables.
-- Stock movement history uses a polymorphic-style structure with `item_type` + `item_id`, but it is implemented manually rather than through Laravel morph relations.
-- Purchase order items also use a manual `item_type` + `item_id` pattern so line items can reference either parts or vehicles while preserving item snapshots.
+- Master data modules follow a consistent FormRequest + Controller + Blade CRUD pattern.
+- Product selection for transactional lines uses manual `item_type` + `item_id` references so one line table can support both parts and vehicles.
+- Purchase and sales line tables store `item_code` and `item_name` snapshots to reduce risk from later master-data edits.
+- Average cost is recalculated during purchase receipt posting and stored on `parts.average_cost_price` and `vehicles.average_cost_price`.
+- Sales workflow now includes order headers and line items, but stock-out posting is still pending.
 
 ## Maintenance Notes
 
-- The project is currently optimized for internal admin use, not public-facing workflows.
 - New modules should follow the same Breeze CRUD pattern unless there is a clear reason to diverge.
-- After each module change, the established maintenance flow is:
+- If a change adds new Blade Tailwind classes or touches shared layout assets, run `npm run build` before considering the UI change complete.
+- Standard completion flow for a module:
   - run migrations if needed
-  - run `artisan route:list`
+  - run `php artisan route:list`
+  - run `git add .`
   - commit
   - push
