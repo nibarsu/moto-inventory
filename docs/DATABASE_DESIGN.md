@@ -238,6 +238,35 @@ Constraint:
 - `item_code` nullable string(50)
 - `item_name` string(150)
 - `quantity` integer, default 1
+- `delivered_quantity` integer, default 0
+- `unit_price` decimal(12,2), default 0
+- `line_total` decimal(12,2), default 0
+- `remark` nullable
+- timestamps
+
+### `sales_shipments`
+
+- `id`
+- `shipment_no` unique, max 30
+- `sales_order_id` FK -> `sales_orders.id`, `restrictOnDelete`
+- `shipment_date` date
+- `customer_id` FK -> `customers.id`, `restrictOnDelete`
+- `warehouse_id` FK -> `warehouses.id`, `restrictOnDelete`
+- `total_amount` decimal(12,2), default 0
+- `remark` nullable
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
+### `sales_shipment_items`
+
+- `id`
+- `sales_shipment_id` FK -> `sales_shipments.id`, `cascadeOnDelete`
+- `sales_order_item_id` nullable FK -> `sales_order_items.id`, `nullOnDelete`
+- `item_type` string(20): `part`, `vehicle`
+- `item_id` unsigned big integer
+- `item_code` nullable string(50)
+- `item_name` string(150)
+- `quantity` integer
 - `unit_price` decimal(12,2), default 0
 - `line_total` decimal(12,2), default 0
 - `remark` nullable
@@ -254,6 +283,7 @@ Constraint:
 - has many filtered `PurchaseOrderItem` where `item_type = part`
 - has many filtered `PurchaseReceiptItem` where `item_type = part`
 - has many filtered `SalesOrderItem` where `item_type = part`
+- has many filtered `SalesShipmentItem` where `item_type = part`
 
 ### `Vehicle`
 
@@ -264,6 +294,7 @@ Constraint:
 - has many filtered `PurchaseOrderItem` where `item_type = vehicle`
 - has many filtered `PurchaseReceiptItem` where `item_type = vehicle`
 - has many filtered `SalesOrderItem` where `item_type = vehicle`
+- has many filtered `SalesShipmentItem` where `item_type = vehicle`
 
 ### `Warehouse`
 
@@ -271,6 +302,7 @@ Constraint:
 - has many `VehicleStock`
 - has many `StockMovement`
 - has many `PurchaseReceipt`
+- has many `SalesShipment`
 
 ### `PurchaseOrder`
 
@@ -293,10 +325,27 @@ Constraint:
 - belongs to `Warehouse`
 - belongs to creator `User`
 - has many `SalesOrderItem`
+- has many `SalesShipment`
 
 ### `SalesOrderItem`
 
 - belongs to `SalesOrder`
+- belongs to `Part` through `item_id` when `item_type = part`
+- belongs to `Vehicle` through `item_id` when `item_type = vehicle`
+- has many `SalesShipmentItem`
+
+### `SalesShipment`
+
+- belongs to `SalesOrder`
+- belongs to `Customer`
+- belongs to `Warehouse`
+- belongs to creator `User`
+- has many `SalesShipmentItem`
+
+### `SalesShipmentItem`
+
+- belongs to `SalesShipment`
+- belongs to `SalesOrderItem`
 
 ## Relationship Summary
 
@@ -316,9 +365,11 @@ Constraint:
 - `purchase_receipts` -> `purchase_receipt_items`
 - `customers` -> `sales_orders`
 - `sales_orders` -> `sales_order_items`
+- `sales_orders` -> `sales_shipments`
+- `sales_shipments` -> `sales_shipment_items`
 
 ## Known Design Gaps
 
 - `StockMovement` still uses manual `item_type + item_id` instead of true Eloquent morph relations.
 - Reverse relationships on some master models are still intentionally minimal.
-- Sales stock-out transaction tables are not implemented yet.
+- Reporting modules are not implemented yet.

@@ -15,7 +15,6 @@
 - Category type must be one of:
   - `part`
   - `vehicle`
-- Category type determines where it can be used.
 
 ### Warehouse
 
@@ -28,14 +27,12 @@
 - Supplier code must be unique.
 - Supplier name is required.
 - Email is optional but must be valid if provided.
-- Suppliers support active/inactive status.
 
 ### Customer
 
 - Customer code must be unique.
 - Customer name is required.
 - Email is optional but must be valid if provided.
-- Customers support active/inactive status.
 
 ## Product Rules
 
@@ -43,19 +40,16 @@
 
 - `part_no` must be unique.
 - Part name is required.
-- Unit is required and defaults to `個`.
+- Unit defaults to `個`.
 - `last_cost_price`, `average_cost_price`, `sale_price`, and `safety_stock` cannot be negative.
-- Brand is optional.
-- Category is optional, but if selected it must be a category with `type = part`.
+- Category must be `type = part` when selected.
 
 ### Vehicle
 
 - `model_code` must be unique.
 - Vehicle name is required.
 - `last_cost_price`, `average_cost_price`, and `sale_price` cannot be negative.
-- `year` is optional and limited to a reasonable year range in validation.
-- Brand is optional.
-- Category is optional, but if selected it must be a category with `type = vehicle`.
+- Category must be `type = vehicle` when selected.
 
 ## Stock Rules
 
@@ -90,39 +84,28 @@
 ### Purchase Order
 
 - Purchase order number must be unique.
-- Purchase order requires:
-  - order date
-  - supplier
-  - warehouse
-  - status
-- `expected_date` is optional but cannot be earlier than `order_date`.
+- Purchase order requires order date, supplier, warehouse, and status.
+- `expected_date` cannot be earlier than `order_date`.
 - Supported statuses:
   - `draft`
   - `confirmed`
   - `completed`
   - `cancelled`
-- `total_amount` must preserve actual purchase amount and cannot be negative.
 - `total_amount` is synchronized from line totals.
 
 ### Purchase Order Item
 
-- Purchase order items support:
-  - `part`
-  - `vehicle`
-- User must choose one concrete item matching `item_type`.
+- Purchase order items support `part` and `vehicle`.
 - `quantity` must be at least 1.
 - `unit_price` cannot be negative.
-- `line_total` is calculated as `quantity * unit_price`.
-- `item_code` and `item_name` are stored as a snapshot.
-- Creating, updating, or deleting a line must recalculate parent `total_amount`.
+- `line_total = quantity * unit_price`.
+- Item code and name are stored as snapshots.
 
 ### Purchase Receipt
 
-- Purchase receipt must be linked to one purchase order.
-- Only purchase orders with remaining receivable quantity can be received.
+- Purchase receipt must link to one purchase order.
 - Cancelled purchase orders cannot be received.
-- Receipt line quantity must be greater than zero and cannot exceed the remaining quantity of the purchase order item.
-- Receipt line `unit_cost` stores the actual received amount.
+- Receipt quantity cannot exceed remaining quantity of the purchase order item.
 - Receipt posting increases stock and creates `stock_movements` with `movement_type = in`.
 - Receipt posting updates `received_quantity` on purchase order items.
 - Receipt posting updates `last_cost_price`.
@@ -130,7 +113,7 @@
 ### Average Cost
 
 - Parts and vehicles each maintain their own `average_cost_price`.
-- Average cost is recalculated from purchase receipt posting in the current phase.
+- Average cost is recalculated from purchase receipt posting.
 - `last_cost_price` preserves the most recent received cost.
 - Average cost is stored with 4 decimal places.
 
@@ -139,34 +122,42 @@
 ### Sales Order
 
 - Sales order number must be unique.
-- Sales order requires:
-  - order date
-  - customer
-  - warehouse
-  - status
-- `delivery_date` is optional but cannot be earlier than `order_date`.
+- Sales order requires order date, customer, warehouse, and status.
+- `delivery_date` cannot be earlier than `order_date`.
 - Supported statuses:
   - `draft`
   - `confirmed`
   - `completed`
   - `cancelled`
-- `total_amount` must preserve actual sales amount and cannot be negative.
 - `total_amount` is synchronized from line totals.
 
 ### Sales Order Item
 
-- Sales order items support:
-  - `part`
-  - `vehicle`
-- User must choose one concrete item matching `item_type`.
+- Sales order items support `part` and `vehicle`.
 - `quantity` must be at least 1.
 - `unit_price` cannot be negative.
-- `line_total` is calculated as `quantity * unit_price`.
-- `item_code` and `item_name` are stored as a snapshot.
+- `line_total = quantity * unit_price`.
+- Item code and name are stored as snapshots.
 - Creating, updating, or deleting a line must recalculate parent `total_amount`.
+- `delivered_quantity` tracks cumulative shipped quantity.
+
+### Sales Shipment
+
+- Sales shipment must link to one sales order.
+- Cancelled sales orders cannot be shipped.
+- Shipment date cannot be earlier than sales order date.
+- Shipment quantity cannot exceed:
+  - remaining quantity on the sales order item
+  - available stock in the sales order warehouse
+- Shipment posting decreases stock and creates `stock_movements` with `movement_type = out`.
+- Stock movement quantity is stored as a negative number for stock-out.
+- Shipment posting updates `delivered_quantity` on sales order items.
+- After shipment posting:
+  - if all line items are fully shipped, sales order status becomes `completed`
+  - otherwise sales order status becomes `confirmed`
 
 ## Current Limitations
 
-- Stock module currently supports manual adjustment and purchase stock-in only.
-- Sales order line items are implemented, but sales stock-out is not implemented yet.
-- No automatic stock reservation or safety-stock alert logic is implemented.
+- Stock reservation is not implemented.
+- Shipment reversal / delete flow is not implemented.
+- Reporting modules are not implemented.

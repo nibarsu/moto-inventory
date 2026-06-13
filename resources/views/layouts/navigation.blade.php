@@ -15,6 +15,7 @@
         ['route' => 'purchase-receipts.index', 'label' => '進貨入庫', 'pattern' => 'purchase-receipts.*'],
         ['route' => 'average-costs.index', 'label' => '平均成本', 'pattern' => 'average-costs.*'],
         ['route' => 'sales-orders.index', 'label' => '銷貨單管理', 'pattern' => 'sales-orders.*'],
+        ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*'],
     ];
 @endphp
 

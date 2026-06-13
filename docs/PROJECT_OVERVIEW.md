@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, purchasing, average cost tracking, and sales order entry.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, purchasing, average cost tracking, sales order entry, and sales stock-out posting.
 
 ## Current Stack
 
@@ -40,6 +40,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Average Cost Calculation
 - Sales Order
 - Sales Order Item
+- Sales Shipment
 
 ## Functional Scope
 
@@ -54,6 +55,7 @@ The current system provides:
 - Purchase receiving with stock-in posting and receipt history
 - Average cost tracking for parts and vehicles
 - Sales order header and line maintenance
+- Sales stock-out posting with inventory deduction and stock movement logging
 
 ## Main Domain Objects
 
@@ -73,6 +75,8 @@ The current system provides:
 - `PurchaseReceiptItem`: purchase receiving line snapshot
 - `SalesOrder`: sales order header/master
 - `SalesOrderItem`: sales order line item snapshot
+- `SalesShipment`: sales stock-out header
+- `SalesShipmentItem`: sales stock-out line snapshot
 
 ## Route Structure
 
@@ -89,6 +93,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `purchase-receipts`
 - `sales-orders`
 - `sales-orders.items`
+- `sales-shipments`
 - `suppliers`
 - `vehicles`
 - `warehouses`
@@ -101,26 +106,13 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `GET /stocks/adjust`
 - `POST /stocks/adjust`
 
-## View Structure
-
-Each CRUD-style module follows Breeze layout patterns under `resources/views/<module>`.
-
-Examples:
-
-- `resources/views/brands`
-- `resources/views/purchase-orders`
-- `resources/views/purchase-order-items`
-- `resources/views/sales-orders`
-- `resources/views/sales-order-items`
-- `resources/views/stocks`
-
 ## Current Architectural Notes
 
 - Master data modules follow a consistent FormRequest + Controller + Blade CRUD pattern.
 - Product selection for transactional lines uses manual `item_type` + `item_id` references so one line table can support both parts and vehicles.
 - Purchase and sales line tables store `item_code` and `item_name` snapshots to reduce risk from later master-data edits.
 - Average cost is recalculated during purchase receipt posting and stored on `parts.average_cost_price` and `vehicles.average_cost_price`.
-- Sales workflow now includes order headers and line items, but stock-out posting is still pending.
+- Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes
 

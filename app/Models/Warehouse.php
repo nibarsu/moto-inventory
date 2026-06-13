@@ -43,4 +43,9 @@ class Warehouse extends Model
     {
         return $this->hasMany(PurchaseReceipt::class);
     }
+
+    public function salesShipments(): HasMany
+    {
+        return $this->hasMany(SalesShipment::class);
+    }
 }

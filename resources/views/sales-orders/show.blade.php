@@ -5,6 +5,9 @@
                 銷貨單明細
             </h2>
             <div class="flex items-center gap-3">
+                <a href="{{ route('sales-shipments.create', ['sales_order_id' => $salesOrder->id]) }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    銷貨出庫
+                </a>
                 <a href="{{ route('sales-orders.items.index', $salesOrder) }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     明細管理
                 </a>
@@ -16,7 +19,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="mx-auto max-w-5xl sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-6xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <dl class="divide-y divide-gray-200 p-6">
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -70,7 +73,9 @@
                                     <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">類型</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">料號 / 車型代碼</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">商品名稱</th>
-                                    <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">數量</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">訂單數量</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">已出庫</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">剩餘可出</th>
                                     <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">單價</th>
                                     <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">小計</th>
                                 </tr>
@@ -82,12 +87,14 @@
                                         <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900">{{ $item->item_code ?: '-' }}</td>
                                         <td class="whitespace-nowrap px-4 py-3 text-sm text-gray-700">{{ $item->item_name }}</td>
                                         <td class="whitespace-nowrap px-4 py-3 text-right text-sm text-gray-700">{{ $item->quantity }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-right text-sm text-gray-700">{{ $item->delivered_quantity }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-right text-sm text-gray-700">{{ max(0, $item->quantity - $item->delivered_quantity) }}</td>
                                         <td class="whitespace-nowrap px-4 py-3 text-right text-sm text-gray-700">{{ number_format($item->unit_price, 2) }}</td>
                                         <td class="whitespace-nowrap px-4 py-3 text-right text-sm text-gray-700">{{ number_format($item->line_total, 2) }}</td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-4 py-6 text-center text-sm text-gray-500">目前沒有銷貨單明細資料。</td>
+                                        <td colspan="8" class="px-4 py-6 text-center text-sm text-gray-500">目前沒有銷貨單明細資料。</td>
                                     </tr>
                                 @endforelse
                             </tbody>
