@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, purchasing, average cost tracking, sales order entry, and sales stock-out posting.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, average cost tracking, sales order entry, and sales stock-out posting.
 
 ## Current Stack
 
@@ -34,6 +34,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Part
 - Vehicle
 - Stock base module
+- Inventory Report
 - Purchase Order
 - Purchase Order Item
 - Purchase Receipt
@@ -51,6 +52,7 @@ The current system provides:
 - Product master data split into parts and vehicles
 - Basic stock balance tracking per warehouse
 - Stock adjustment and stock movement history
+- Inventory report with stock value visibility
 - Purchase order header and line maintenance
 - Purchase receiving with stock-in posting and receipt history
 - Average cost tracking for parts and vehicles
@@ -101,6 +103,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 ### Utility routes
 
 - `GET /average-costs`
+- `GET /inventory-reports`
 - `GET /stocks`
 - `GET /stock-movements`
 - `GET /stocks/adjust`
@@ -112,6 +115,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Product selection for transactional lines uses manual `item_type` + `item_id` references so one line table can support both parts and vehicles.
 - Purchase and sales line tables store `item_code` and `item_name` snapshots to reduce risk from later master-data edits.
 - Average cost is recalculated during purchase receipt posting and stored on `parts.average_cost_price` and `vehicles.average_cost_price`.
+- Inventory report is a read model composed from `part_stocks` / `vehicle_stocks` plus product masters.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes

@@ -11,6 +11,7 @@
         ['route' => 'stocks.index', 'label' => '庫存查詢', 'pattern' => 'stocks.index'],
         ['route' => 'stock-movements.index', 'label' => '庫存異動', 'pattern' => 'stock-movements.index'],
         ['route' => 'stocks.adjust', 'label' => '庫存調整', 'pattern' => 'stocks.adjust'],
+        ['route' => 'inventory-reports.index', 'label' => '庫存報表', 'pattern' => 'inventory-reports.*'],
         ['route' => 'purchase-orders.index', 'label' => '進貨單管理', 'pattern' => 'purchase-orders.*'],
         ['route' => 'purchase-receipts.index', 'label' => '進貨入庫', 'pattern' => 'purchase-receipts.*'],
         ['route' => 'average-costs.index', 'label' => '平均成本', 'pattern' => 'average-costs.*'],

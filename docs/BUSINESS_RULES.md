@@ -79,6 +79,19 @@
 - If the balance row does not exist yet, the system creates it before adjustment.
 - Stock update and movement insert must run in one database transaction.
 
+### Inventory Report
+
+- Inventory report is read-only.
+- Inventory report can filter by:
+  - item type
+  - warehouse
+  - active status
+  - keyword
+- Inventory report shows one row per item per warehouse.
+- `stock_cost_amount = quantity * average_cost_price`
+- `stock_sale_amount = quantity * sale_price`
+- The report does not change any stock quantity.
+
 ## Purchase Rules
 
 ### Purchase Order
@@ -160,4 +173,5 @@
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
-- Reporting modules are not implemented.
+- Purchase report and sales report are not implemented yet.
+- Export features are not implemented yet.

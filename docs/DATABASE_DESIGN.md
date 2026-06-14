@@ -154,6 +154,10 @@ Constraint:
 - `created_by` nullable FK -> `users.id`, `nullOnDelete`
 - timestamps
 
+Note:
+
+- Inventory report is generated directly from `part_stocks` and `vehicle_stocks` joined with product and warehouse masters. No separate report table exists.
+
 ## Purchase Tables
 
 ### `purchase_orders`
@@ -330,8 +334,8 @@ Constraint:
 ### `SalesOrderItem`
 
 - belongs to `SalesOrder`
-- belongs to `Part` through `item_id` when `item_type = part`
-- belongs to `Vehicle` through `item_id` when `item_type = vehicle`
+- belongs to `Part` through `item_id`
+- belongs to `Vehicle` through `item_id`
 - has many `SalesShipmentItem`
 
 ### `SalesShipment`
@@ -372,4 +376,4 @@ Constraint:
 
 - `StockMovement` still uses manual `item_type + item_id` instead of true Eloquent morph relations.
 - Reverse relationships on some master models are still intentionally minimal.
-- Reporting modules are not implemented yet.
+- Purchase report and sales report are not implemented yet.
