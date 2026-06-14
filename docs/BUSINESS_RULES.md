@@ -123,6 +123,19 @@
 - Receipt posting updates `received_quantity` on purchase order items.
 - Receipt posting updates `last_cost_price`.
 
+### Purchase Report
+
+- Purchase report is read-only.
+- Purchase report is based on posted purchase receipt data, not draft purchase orders.
+- Purchase report can filter by:
+  - receipt date range
+  - supplier
+  - warehouse
+  - item type
+  - keyword
+- Purchase report totals are calculated from filtered receipt lines.
+- Purchase report must preserve actual receipt quantity and actual receipt amount.
+
 ### Average Cost
 
 - Parts and vehicles each maintain their own `average_cost_price`.
@@ -173,5 +186,5 @@
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
-- Purchase report and sales report are not implemented yet.
+- Sales report is not implemented yet.
 - Export features are not implemented yet.

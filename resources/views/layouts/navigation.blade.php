@@ -14,6 +14,7 @@
         ['route' => 'inventory-reports.index', 'label' => '庫存報表', 'pattern' => 'inventory-reports.*'],
         ['route' => 'purchase-orders.index', 'label' => '進貨單管理', 'pattern' => 'purchase-orders.*'],
         ['route' => 'purchase-receipts.index', 'label' => '進貨入庫', 'pattern' => 'purchase-receipts.*'],
+        ['route' => 'purchase-reports.index', 'label' => '進貨報表', 'pattern' => 'purchase-reports.*'],
         ['route' => 'average-costs.index', 'label' => '平均成本', 'pattern' => 'average-costs.*'],
         ['route' => 'sales-orders.index', 'label' => '銷貨單管理', 'pattern' => 'sales-orders.*'],
         ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*'],
@@ -33,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:ms-6 sm:flex sm:items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition ease-in-out duration-150 hover:text-gray-700 focus:outline-none">
@@ -76,12 +77,14 @@
     </div>
 
     <div class="hidden border-t border-gray-100 bg-white sm:block">
-        <div class="mx-auto flex max-w-7xl flex-wrap gap-x-6 gap-y-2 px-4 py-3 sm:px-6 lg:px-8">
-            @foreach ($navigationLinks as $link)
-                <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['pattern'])">
-                    {{ $link['label'] }}
-                </x-nav-link>
-            @endforeach
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-2 py-3">
+                @foreach ($navigationLinks as $link)
+                    <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['pattern'])">
+                        {{ $link['label'] }}
+                    </x-nav-link>
+                @endforeach
+            </div>
         </div>
     </div>
 

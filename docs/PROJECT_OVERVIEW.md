@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, average cost tracking, sales order entry, and sales stock-out posting.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, and sales stock-out posting.
 
 ## Current Stack
 
@@ -38,6 +38,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Purchase Order
 - Purchase Order Item
 - Purchase Receipt
+- Purchase Report
 - Average Cost Calculation
 - Sales Order
 - Sales Order Item
@@ -55,6 +56,7 @@ The current system provides:
 - Inventory report with stock value visibility
 - Purchase order header and line maintenance
 - Purchase receiving with stock-in posting and receipt history
+- Purchase report based on actual receipt transactions
 - Average cost tracking for parts and vehicles
 - Sales order header and line maintenance
 - Sales stock-out posting with inventory deduction and stock movement logging
@@ -104,6 +106,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 
 - `GET /average-costs`
 - `GET /inventory-reports`
+- `GET /purchase-reports`
 - `GET /stocks`
 - `GET /stock-movements`
 - `GET /stocks/adjust`
@@ -116,6 +119,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Purchase and sales line tables store `item_code` and `item_name` snapshots to reduce risk from later master-data edits.
 - Average cost is recalculated during purchase receipt posting and stored on `parts.average_cost_price` and `vehicles.average_cost_price`.
 - Inventory report is a read model composed from `part_stocks` / `vehicle_stocks` plus product masters.
+- Purchase report is a read model composed from `purchase_receipts` / `purchase_receipt_items`.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes

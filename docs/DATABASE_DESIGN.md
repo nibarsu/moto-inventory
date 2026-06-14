@@ -157,6 +157,7 @@ Constraint:
 Note:
 
 - Inventory report is generated directly from `part_stocks` and `vehicle_stocks` joined with product and warehouse masters. No separate report table exists.
+- Purchase report is generated directly from `purchase_receipts` and `purchase_receipt_items`. No separate report table exists.
 
 ## Purchase Tables
 
@@ -323,6 +324,21 @@ Note:
 - belongs to creator `User`
 - has many `PurchaseReceiptItem`
 
+### Purchase Reporting Read Model
+
+- Source header table: `purchase_receipts`
+- Source line table: `purchase_receipt_items`
+- Common filters:
+  - receipt date range
+  - supplier
+  - warehouse
+  - item type (`part`, `vehicle`)
+  - keyword on receipt no / purchase order no / item code / item name
+- Report totals:
+  - line count
+  - total receipt quantity
+  - total receipt amount
+
 ### `SalesOrder`
 
 - belongs to `Customer`
@@ -376,4 +392,4 @@ Note:
 
 - `StockMovement` still uses manual `item_type + item_id` instead of true Eloquent morph relations.
 - Reverse relationships on some master models are still intentionally minimal.
-- Purchase report and sales report are not implemented yet.
+- Sales report is not implemented yet.
