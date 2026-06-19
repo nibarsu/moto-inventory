@@ -12,6 +12,7 @@ use App\Http\Controllers\PurchaseOrderItemController;
 use App\Http\Controllers\PurchaseReportController;
 use App\Http\Controllers\PurchaseReceiptController;
 use App\Http\Controllers\SalesOrderController;
+use App\Http\Controllers\SalesReportController;
 use App\Http\Controllers\SalesOrderItemController;
 use App\Http\Controllers\SalesShipmentController;
 use App\Http\Controllers\StockController;
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('purchase-receipts', PurchaseReceiptController::class)->except(['destroy']);
     Route::resource('sales-orders', SalesOrderController::class);
     Route::resource('sales-orders.items', SalesOrderItemController::class)->except(['show']);
+    Route::get('sales-reports', [SalesReportController::class, 'index'])->name('sales-reports.index');
     Route::resource('sales-shipments', SalesShipmentController::class)->except(['destroy']);
     Route::resource('suppliers', SupplierController::class);
     Route::resource('vehicles', VehicleController::class);

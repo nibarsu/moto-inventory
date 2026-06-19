@@ -182,9 +182,21 @@
   - if all line items are fully shipped, sales order status becomes `completed`
   - otherwise sales order status becomes `confirmed`
 
+### Sales Report
+
+- Sales report is read-only.
+- Sales report is based on posted shipment data, not draft sales orders.
+- Sales report can filter by:
+  - shipment date range
+  - customer
+  - warehouse
+  - item type
+  - keyword
+- Sales report totals are calculated from filtered shipment lines.
+- Sales report must preserve actual shipped quantity and actual sales amount.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
-- Sales report is not implemented yet.
 - Export features are not implemented yet.

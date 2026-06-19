@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, and sales stock-out posting.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, and sales stock-out posting.
 
 ## Current Stack
 
@@ -43,6 +43,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Sales Order
 - Sales Order Item
 - Sales Shipment
+- Sales Report
 
 ## Functional Scope
 
@@ -60,6 +61,7 @@ The current system provides:
 - Average cost tracking for parts and vehicles
 - Sales order header and line maintenance
 - Sales stock-out posting with inventory deduction and stock movement logging
+- Sales report based on actual shipment transactions
 
 ## Main Domain Objects
 
@@ -107,6 +109,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `GET /average-costs`
 - `GET /inventory-reports`
 - `GET /purchase-reports`
+- `GET /sales-reports`
 - `GET /stocks`
 - `GET /stock-movements`
 - `GET /stocks/adjust`
@@ -120,6 +123,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Average cost is recalculated during purchase receipt posting and stored on `parts.average_cost_price` and `vehicles.average_cost_price`.
 - Inventory report is a read model composed from `part_stocks` / `vehicle_stocks` plus product masters.
 - Purchase report is a read model composed from `purchase_receipts` / `purchase_receipt_items`.
+- Sales report is a read model composed from `sales_shipments` / `sales_shipment_items`.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes
