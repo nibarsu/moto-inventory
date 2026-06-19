@@ -210,9 +210,19 @@
 - `plate_no` and `mileage` are optional intake fields.
 - Complaint, diagnosis, and remark are free-text notes and may be updated as work progresses.
 
+### Maintenance Record
+
+- Maintenance record number must be unique.
+- Maintenance record requires service date, customer, and service type.
+- `vehicle_id` is optional.
+- `repair_order_id` is optional.
+- `next_service_date` cannot be earlier than `service_date`.
+- `plate_no`, `mileage`, and `next_service_mileage` are optional fields.
+- Service content and remark are free-text notes.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
 - Export features are not implemented yet.
-- Repair order line items and maintenance history are not implemented yet.
+- Repair order line items are not implemented yet.

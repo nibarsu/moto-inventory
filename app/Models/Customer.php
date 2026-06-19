@@ -30,4 +30,9 @@ class Customer extends Model
     {
         return $this->hasMany(RepairOrder::class);
     }
+
+    public function maintenanceRecords(): HasMany
+    {
+        return $this->hasMany(MaintenanceRecord::class);
+    }
 }

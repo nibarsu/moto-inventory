@@ -20,6 +20,7 @@
         ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*'],
         ['route' => 'sales-reports.index', 'label' => '銷貨報表', 'pattern' => 'sales-reports.*'],
         ['route' => 'repair-orders.index', 'label' => '維修工單', 'pattern' => 'repair-orders.*'],
+        ['route' => 'maintenance-records.index', 'label' => '保養紀錄', 'pattern' => 'maintenance-records.*'],
     ];
 @endphp
 

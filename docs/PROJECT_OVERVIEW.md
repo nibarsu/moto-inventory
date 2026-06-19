@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, and repair work order management.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, and maintenance history intake.
 
 ## Current Stack
 
@@ -45,6 +45,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Sales Shipment
 - Sales Report
 - Repair Order
+- Maintenance Record
 
 ## Functional Scope
 
@@ -64,6 +65,7 @@ The current system provides:
 - Sales stock-out posting with inventory deduction and stock movement logging
 - Sales report based on actual shipment transactions
 - Repair work order header management for after-sales service intake
+- Maintenance record intake with optional linkage to repair work orders
 
 ## Main Domain Objects
 
@@ -86,6 +88,7 @@ The current system provides:
 - `SalesShipment`: sales stock-out header
 - `SalesShipmentItem`: sales stock-out line snapshot
 - `RepairOrder`: repair work order header
+- `MaintenanceRecord`: maintenance history header
 
 ## Route Structure
 
@@ -104,6 +107,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `sales-orders.items`
 - `sales-shipments`
 - `repair-orders`
+- `maintenance-records`
 - `suppliers`
 - `vehicles`
 - `warehouses`
@@ -129,6 +133,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Purchase report is a read model composed from `purchase_receipts` / `purchase_receipt_items`.
 - Sales report is a read model composed from `sales_shipments` / `sales_shipment_items`.
 - Repair workflow currently covers work order header intake only.
+- Maintenance workflow currently covers record header intake only.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes

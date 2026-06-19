@@ -10,6 +10,7 @@ The database is currently organized around:
 - purchase tables
 - sales tables
 - repair tables
+- maintenance tables
 
 Laravel default tables such as `users`, `cache`, and `jobs` are also present.
 
@@ -297,6 +298,26 @@ Note:
 - `created_by` nullable FK -> `users.id`, `nullOnDelete`
 - timestamps
 
+## Maintenance Tables
+
+### `maintenance_records`
+
+- `id`
+- `record_no` unique, max 30
+- `service_date` date
+- `customer_id` FK -> `customers.id`, `restrictOnDelete`
+- `vehicle_id` nullable FK -> `vehicles.id`, `nullOnDelete`
+- `repair_order_id` nullable FK -> `repair_orders.id`, `nullOnDelete`
+- `plate_no` nullable, max 20
+- `mileage` nullable unsigned integer
+- `service_type` string(50)
+- `next_service_date` nullable date
+- `next_service_mileage` nullable unsigned integer
+- `service_content` nullable text
+- `remark` nullable text
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
 ## Implemented Model Relationships
 
 ### `Part`
@@ -392,6 +413,14 @@ Note:
 - belongs to `Customer`
 - belongs to `Vehicle`
 - belongs to creator `User`
+- has many `MaintenanceRecord`
+
+### `MaintenanceRecord`
+
+- belongs to `Customer`
+- belongs to `Vehicle`
+- belongs to `RepairOrder`
+- belongs to creator `User`
 
 ### Sales Reporting Read Model
 
@@ -430,6 +459,9 @@ Note:
 - `sales_shipments` -> `sales_shipment_items`
 - `customers` -> `repair_orders`
 - `vehicles` -> `repair_orders`
+- `customers` -> `maintenance_records`
+- `vehicles` -> `maintenance_records`
+- `repair_orders` -> `maintenance_records`
 
 ## Known Design Gaps
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InventoryReportController;
+use App\Http\Controllers\MaintenanceRecordController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseOrderController;
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('customers', CustomerController::class);
     Route::get('inventory-reports', [InventoryReportController::class, 'index'])->name('inventory-reports.index');
+    Route::resource('maintenance-records', MaintenanceRecordController::class);
     Route::resource('parts', PartController::class);
     Route::resource('purchase-orders', PurchaseOrderController::class);
     Route::resource('purchase-orders.items', PurchaseOrderItemController::class)->except(['show']);

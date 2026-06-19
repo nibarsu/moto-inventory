@@ -4,20 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class RepairOrder extends Model
+class MaintenanceRecord extends Model
 {
     protected $fillable = [
-        'wo_no',
-        'order_date',
+        'record_no',
+        'service_date',
         'customer_id',
         'vehicle_id',
+        'repair_order_id',
         'plate_no',
         'mileage',
-        'status',
-        'complaint',
-        'diagnosis',
+        'service_type',
+        'next_service_date',
+        'next_service_mileage',
+        'service_content',
         'remark',
         'created_by',
     ];
@@ -25,10 +26,13 @@ class RepairOrder extends Model
     protected function casts(): array
     {
         return [
-            'order_date' => 'date',
+            'service_date' => 'date',
             'customer_id' => 'integer',
             'vehicle_id' => 'integer',
+            'repair_order_id' => 'integer',
             'mileage' => 'integer',
+            'next_service_date' => 'date',
+            'next_service_mileage' => 'integer',
             'created_by' => 'integer',
         ];
     }
@@ -43,13 +47,13 @@ class RepairOrder extends Model
         return $this->belongsTo(Vehicle::class);
     }
 
+    public function repairOrder(): BelongsTo
+    {
+        return $this->belongsTo(RepairOrder::class);
+    }
+
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function maintenanceRecords(): HasMany
-    {
-        return $this->hasMany(MaintenanceRecord::class);
     }
 }
