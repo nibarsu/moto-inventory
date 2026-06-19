@@ -11,6 +11,7 @@ use App\Http\Controllers\MaintenanceRecordController;
 use App\Http\Controllers\OwnerHistoryController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductImportController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrderItemController;
 use App\Http\Controllers\PurchaseReportController;
@@ -50,6 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('maintenance-records', MaintenanceRecordController::class);
     Route::get('owner-histories', [OwnerHistoryController::class, 'index'])->name('owner-histories.index');
     Route::resource('parts', PartController::class);
+    Route::get('product-imports/template/{itemType}', [ProductImportController::class, 'template'])->name('product-imports.template');
+    Route::resource('product-imports', ProductImportController::class)->only(['index', 'store', 'show']);
     Route::resource('purchase-orders', PurchaseOrderController::class);
     Route::resource('purchase-orders.items', PurchaseOrderItemController::class)->except(['show']);
     Route::get('purchase-reports', [PurchaseReportController::class, 'index'])->name('purchase-reports.index');

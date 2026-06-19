@@ -526,6 +526,26 @@ Note:
 - belongs to `Supplier`
 - belongs to creator `User`
 
+## Utility Tables
+
+### `product_import_logs`
+
+- `id`
+- `item_type` string(20): `part`, `vehicle`
+- `original_filename` string(255)
+- `total_rows` unsigned integer, default 0
+- `created_count` unsigned integer, default 0
+- `updated_count` unsigned integer, default 0
+- `skipped_count` unsigned integer, default 0
+- `status` string(20), default `completed`
+- `summary` nullable json
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
+### `ProductImportLog`
+
+- belongs to creator `User`
+
 ## Known Design Gaps
 
 - Barcode printing does not introduce new tables; it uses existing `parts.barcode`, `parts.part_no`, `vehicles.barcode`, and `vehicles.model_code`.

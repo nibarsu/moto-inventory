@@ -283,6 +283,17 @@
 - Camera scanning depends on browser support for media devices and native barcode detection.
 - Manual barcode input remains available as a fallback workflow.
 
+### Product Import
+
+- Product import supports both parts and vehicles.
+- Import file format is CSV.
+- Part import uses `part_no` as the unique lookup key.
+- Vehicle import uses `model_code` as the unique lookup key.
+- If the product already exists, import updates the existing record.
+- If the product does not exist, import creates a new record.
+- `brand_code` and `category_code` must match existing master data when provided.
+- Import logs must preserve total rows, created rows, updated rows, skipped rows, and row-level errors.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.

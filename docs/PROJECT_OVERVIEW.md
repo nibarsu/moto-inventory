@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, owner service history lookup, manual accounts receivable tracking, manual accounts payable tracking, barcode label printing, and barcode scanning lookup.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, owner service history lookup, manual accounts receivable tracking, manual accounts payable tracking, barcode label printing, barcode scanning lookup, and product CSV import.
 
 ## Current Stack
 
@@ -51,6 +51,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Accounts Payable
 - Barcode Printing
 - Barcode Scanning
+- Product Import
 
 ## Functional Scope
 
@@ -76,6 +77,7 @@ The current system provides:
 - Manual accounts payable maintenance for supplier balances
 - Barcode label printing for part and vehicle master data
 - Barcode scanning lookup by camera or manual input
+- Product CSV import with import logs
 
 ## Main Domain Objects
 
@@ -136,6 +138,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `GET /owner-histories`
 - `GET /barcode-labels`
 - `GET /barcode-scans`
+- `GET /product-imports`
 - `GET /stocks`
 - `GET /stock-movements`
 - `GET /stocks/adjust`
@@ -157,6 +160,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Accounts payable currently uses manual entry and status derived from total / paid amount.
 - Barcode printing uses existing product barcode values and falls back to part no / model code when barcode is blank.
 - Barcode scanning uses browser-native APIs when available and falls back to manual barcode input.
+- Product import uses CSV upload, master-code mapping, and import log history for auditability.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes
