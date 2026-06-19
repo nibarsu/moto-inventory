@@ -35,4 +35,9 @@ class Customer extends Model
     {
         return $this->hasMany(MaintenanceRecord::class);
     }
+
+    public function receivables(): HasMany
+    {
+        return $this->hasMany(Receivable::class);
+    }
 }

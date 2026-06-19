@@ -11,6 +11,7 @@ The database is currently organized around:
 - sales tables
 - repair tables
 - maintenance tables
+- finance tables
 
 Laravel default tables such as `users`, `cache`, and `jobs` are also present.
 
@@ -478,6 +479,30 @@ Note:
 - `customers` -> `maintenance_records`
 - `vehicles` -> `maintenance_records`
 - `repair_orders` -> `maintenance_records`
+
+## Finance Tables
+
+### `accounts_receivable`
+
+- `id`
+- `ar_no` unique, max 30
+- `customer_id` FK -> `customers.id`, `restrictOnDelete`
+- `source_type` nullable string(30)
+- `source_id` nullable unsigned big integer
+- `ar_date` date
+- `due_date` nullable date
+- `total_amount` decimal(12,2), default 0
+- `received_amount` decimal(12,2), default 0
+- `balance_amount` decimal(12,2), default 0
+- `status` string(20), default `open`
+- `remark` nullable text
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
+### `Receivable`
+
+- belongs to `Customer`
+- belongs to creator `User`
 
 ## Known Design Gaps
 

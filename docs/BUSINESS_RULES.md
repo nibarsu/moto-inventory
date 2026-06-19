@@ -232,9 +232,25 @@
 - Owner history sorts records by newest service date first.
 - Owner history is intended for service lookup, not financial settlement.
 
+## Finance Rules
+
+### Accounts Receivable
+
+- Receivable number must be unique.
+- Receivable requires customer, receivable date, total amount, and received amount.
+- `due_date` cannot be earlier than `ar_date`.
+- `balance_amount = max(total_amount - received_amount, 0)`.
+- Status is derived automatically:
+  - `open`: no payment received
+  - `partial`: partial payment received
+  - `paid`: received amount covers total amount
+  - `void`: total amount is zero
+- `source_type` and `source_id` are optional reference fields.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
 - Export features are not implemented yet.
 - Repair order line items are not implemented yet.
+- Accounts receivable is not auto-generated from sales documents yet.

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, and owner service history lookup.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, owner service history lookup, and manual accounts receivable tracking.
 
 ## Current Stack
 
@@ -47,6 +47,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Repair Order
 - Maintenance Record
 - Owner History
+- Accounts Receivable
 
 ## Functional Scope
 
@@ -68,6 +69,7 @@ The current system provides:
 - Repair work order header management for after-sales service intake
 - Maintenance record intake with optional linkage to repair work orders
 - Owner history lookup across repair and maintenance records
+- Manual accounts receivable maintenance for customer balances
 
 ## Main Domain Objects
 
@@ -92,6 +94,7 @@ The current system provides:
 - `RepairOrder`: repair work order header
 - `MaintenanceRecord`: maintenance history header
 - `OwnerHistory`: combined read model for owner service timeline
+- `Receivable`: accounts receivable header
 
 ## Route Structure
 
@@ -112,6 +115,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `repair-orders`
 - `maintenance-records`
 - `suppliers`
+- `accounts-receivable`
 - `vehicles`
 - `warehouses`
 
@@ -139,6 +143,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Repair workflow currently covers work order header intake only.
 - Maintenance workflow currently covers record header intake only.
 - Owner history is a combined read model built from repair orders and maintenance records.
+- Accounts receivable currently uses manual entry and status derived from total / received amount.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes

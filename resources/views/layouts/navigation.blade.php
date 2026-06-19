@@ -22,6 +22,7 @@
         ['route' => 'repair-orders.index', 'label' => '維修工單', 'pattern' => 'repair-orders.*'],
         ['route' => 'maintenance-records.index', 'label' => '保養紀錄', 'pattern' => 'maintenance-records.*'],
         ['route' => 'owner-histories.index', 'label' => '車主歷史紀錄', 'pattern' => 'owner-histories.*'],
+        ['route' => 'accounts-receivable.index', 'label' => '應收帳款', 'pattern' => 'accounts-receivable.*'],
     ];
 @endphp
 

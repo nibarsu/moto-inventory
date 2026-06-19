@@ -14,6 +14,7 @@ use App\Http\Controllers\PurchaseOrderItemController;
 use App\Http\Controllers\PurchaseReportController;
 use App\Http\Controllers\PurchaseReceiptController;
 use App\Http\Controllers\RepairOrderController;
+use App\Http\Controllers\ReceivableController;
 use App\Http\Controllers\SalesOrderController;
 use App\Http\Controllers\SalesReportController;
 use App\Http\Controllers\SalesOrderItemController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('customers', CustomerController::class);
     Route::get('inventory-reports', [InventoryReportController::class, 'index'])->name('inventory-reports.index');
+    Route::resource('accounts-receivable', ReceivableController::class);
     Route::resource('maintenance-records', MaintenanceRecordController::class);
     Route::get('owner-histories', [OwnerHistoryController::class, 'index'])->name('owner-histories.index');
     Route::resource('parts', PartController::class);
