@@ -529,5 +529,6 @@ Note:
 ## Known Design Gaps
 
 - Barcode printing does not introduce new tables; it uses existing `parts.barcode`, `parts.part_no`, `vehicles.barcode`, and `vehicles.model_code`.
+- Barcode scanning does not introduce new tables; it looks up existing `parts` and `vehicles` by barcode or product code.
 - `StockMovement` still uses manual `item_type + item_id` instead of true Eloquent morph relations.
 - Reverse relationships on some master models are still intentionally minimal.

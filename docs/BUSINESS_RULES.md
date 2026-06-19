@@ -272,11 +272,21 @@
 - Barcode preview is read-only and does not change any business data.
 - Users can print multiple copies of the same product label in one batch.
 
+### Barcode Scanning
+
+- Barcode scanning supports both parts and vehicles.
+- Scanning lookup accepts:
+  - product `barcode`
+  - part `part_no`
+  - vehicle `model_code`
+- Barcode scanning is a read-only lookup tool and does not change any business data.
+- Camera scanning depends on browser support for media devices and native barcode detection.
+- Manual barcode input remains available as a fallback workflow.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
-- Barcode scanning is not implemented yet.
 - Export features are not implemented yet.
 - Repair order line items are not implemented yet.
 - Accounts receivable is not auto-generated from sales documents yet.
