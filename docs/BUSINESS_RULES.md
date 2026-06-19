@@ -247,6 +247,19 @@
   - `void`: total amount is zero
 - `source_type` and `source_id` are optional reference fields.
 
+### Accounts Payable
+
+- Payable number must be unique.
+- Payable requires supplier, payable date, total amount, and paid amount.
+- `due_date` cannot be earlier than `ap_date`.
+- `balance_amount = max(total_amount - paid_amount, 0)`.
+- Status is derived automatically:
+  - `open`: no payment paid
+  - `partial`: partial payment paid
+  - `paid`: paid amount covers total amount
+  - `void`: total amount is zero
+- `source_type` and `source_id` are optional reference fields.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
@@ -254,3 +267,4 @@
 - Export features are not implemented yet.
 - Repair order line items are not implemented yet.
 - Accounts receivable is not auto-generated from sales documents yet.
+- Accounts payable is not auto-generated from purchase documents yet.

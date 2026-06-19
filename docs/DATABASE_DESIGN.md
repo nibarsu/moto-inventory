@@ -504,6 +504,28 @@ Note:
 - belongs to `Customer`
 - belongs to creator `User`
 
+### `accounts_payable`
+
+- `id`
+- `ap_no` unique, max 30
+- `supplier_id` FK -> `suppliers.id`, `restrictOnDelete`
+- `source_type` nullable string(30)
+- `source_id` nullable unsigned big integer
+- `ap_date` date
+- `due_date` nullable date
+- `total_amount` decimal(12,2), default 0
+- `paid_amount` decimal(12,2), default 0
+- `balance_amount` decimal(12,2), default 0
+- `status` string(20), default `open`
+- `remark` nullable text
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
+### `Payable`
+
+- belongs to `Supplier`
+- belongs to creator `User`
+
 ## Known Design Gaps
 
 - `StockMovement` still uses manual `item_type + item_id` instead of true Eloquent morph relations.
