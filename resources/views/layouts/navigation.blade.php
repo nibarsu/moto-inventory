@@ -1,33 +1,44 @@
 @php
     $navigationLinks = [
-        ['route' => 'dashboard', 'label' => __('Dashboard'), 'pattern' => 'dashboard'],
-        ['route' => 'brands.index', 'label' => '品牌管理', 'pattern' => 'brands.*'],
-        ['route' => 'categories.index', 'label' => '商品分類', 'pattern' => 'categories.*'],
-        ['route' => 'parts.index', 'label' => '零件商品管理', 'pattern' => 'parts.*'],
-        ['route' => 'vehicles.index', 'label' => '整車商品管理', 'pattern' => 'vehicles.*'],
-        ['route' => 'warehouses.index', 'label' => '倉庫管理', 'pattern' => 'warehouses.*'],
-        ['route' => 'suppliers.index', 'label' => '供應商管理', 'pattern' => 'suppliers.*'],
-        ['route' => 'customers.index', 'label' => '客戶管理', 'pattern' => 'customers.*'],
-        ['route' => 'stocks.index', 'label' => '庫存查詢', 'pattern' => 'stocks.index'],
-        ['route' => 'stock-movements.index', 'label' => '庫存異動', 'pattern' => 'stock-movements.index'],
-        ['route' => 'stocks.adjust', 'label' => '庫存調整', 'pattern' => 'stocks.adjust'],
-        ['route' => 'inventory-reports.index', 'label' => '庫存報表', 'pattern' => 'inventory-reports.*'],
-        ['route' => 'purchase-orders.index', 'label' => '進貨單管理', 'pattern' => 'purchase-orders.*'],
-        ['route' => 'purchase-receipts.index', 'label' => '進貨入庫', 'pattern' => 'purchase-receipts.*'],
-        ['route' => 'purchase-reports.index', 'label' => '進貨報表', 'pattern' => 'purchase-reports.*'],
-        ['route' => 'average-costs.index', 'label' => '平均成本', 'pattern' => 'average-costs.*'],
-        ['route' => 'barcode-labels.index', 'label' => '條碼列印', 'pattern' => 'barcode-labels.*'],
-        ['route' => 'barcode-scans.index', 'label' => '條碼掃描', 'pattern' => 'barcode-scans.*'],
-        ['route' => 'product-imports.index', 'label' => '匯入商品', 'pattern' => 'product-imports.*'],
-        ['route' => 'excel-exports.index', 'label' => '匯出 Excel', 'pattern' => 'excel-exports.*'],
-        ['route' => 'sales-orders.index', 'label' => '銷貨單管理', 'pattern' => 'sales-orders.*'],
-        ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*'],
-        ['route' => 'sales-reports.index', 'label' => '銷貨報表', 'pattern' => 'sales-reports.*'],
-        ['route' => 'repair-orders.index', 'label' => '維修工單', 'pattern' => 'repair-orders.*'],
-        ['route' => 'maintenance-records.index', 'label' => '保養紀錄', 'pattern' => 'maintenance-records.*'],
-        ['route' => 'owner-histories.index', 'label' => '車主歷史紀錄', 'pattern' => 'owner-histories.*'],
-        ['route' => 'accounts-receivable.index', 'label' => '應收帳款', 'pattern' => 'accounts-receivable.*'],
+        ['route' => 'dashboard', 'label' => __('Dashboard'), 'pattern' => 'dashboard', 'permission' => null],
+        ['route' => 'brands.index', 'label' => '品牌管理', 'pattern' => 'brands.*', 'permission' => 'brands.manage'],
+        ['route' => 'categories.index', 'label' => '商品分類', 'pattern' => 'categories.*', 'permission' => 'categories.manage'],
+        ['route' => 'parts.index', 'label' => '零件商品管理', 'pattern' => 'parts.*', 'permission' => 'parts.manage'],
+        ['route' => 'vehicles.index', 'label' => '整車商品管理', 'pattern' => 'vehicles.*', 'permission' => 'vehicles.manage'],
+        ['route' => 'warehouses.index', 'label' => '倉庫管理', 'pattern' => 'warehouses.*', 'permission' => 'warehouses.manage'],
+        ['route' => 'suppliers.index', 'label' => '供應商管理', 'pattern' => 'suppliers.*', 'permission' => 'suppliers.manage'],
+        ['route' => 'customers.index', 'label' => '客戶管理', 'pattern' => 'customers.*', 'permission' => 'customers.manage'],
+        ['route' => 'stocks.index', 'label' => '庫存查詢', 'pattern' => 'stocks.index', 'permission' => 'stocks.manage'],
+        ['route' => 'stock-movements.index', 'label' => '庫存異動', 'pattern' => 'stock-movements.index', 'permission' => 'stocks.manage'],
+        ['route' => 'stocks.adjust', 'label' => '庫存調整', 'pattern' => 'stocks.adjust', 'permission' => 'stocks.manage'],
+        ['route' => 'inventory-reports.index', 'label' => '庫存報表', 'pattern' => 'inventory-reports.*', 'permission' => 'stocks.manage'],
+        ['route' => 'average-costs.index', 'label' => '平均成本', 'pattern' => 'average-costs.*', 'permission' => 'stocks.manage'],
+        ['route' => 'purchase-orders.index', 'label' => '進貨單管理', 'pattern' => 'purchase-orders.*', 'permission' => 'purchase.manage'],
+        ['route' => 'purchase-receipts.index', 'label' => '進貨入庫', 'pattern' => 'purchase-receipts.*', 'permission' => 'purchase.manage'],
+        ['route' => 'purchase-reports.index', 'label' => '進貨報表', 'pattern' => 'purchase-reports.*', 'permission' => 'purchase.manage'],
+        ['route' => 'sales-orders.index', 'label' => '銷貨單管理', 'pattern' => 'sales-orders.*', 'permission' => 'sales.manage'],
+        ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*', 'permission' => 'sales.manage'],
+        ['route' => 'sales-reports.index', 'label' => '銷貨報表', 'pattern' => 'sales-reports.*', 'permission' => 'sales.manage'],
+        ['route' => 'repair-orders.index', 'label' => '維修工單', 'pattern' => 'repair-orders.*', 'permission' => 'repairs.manage'],
+        ['route' => 'maintenance-records.index', 'label' => '保養紀錄', 'pattern' => 'maintenance-records.*', 'permission' => 'repairs.manage'],
+        ['route' => 'owner-histories.index', 'label' => '車主歷史紀錄', 'pattern' => 'owner-histories.*', 'permission' => 'repairs.manage'],
+        ['route' => 'accounts-receivable.index', 'label' => '應收帳款', 'pattern' => 'accounts-receivable.*', 'permission' => 'finance.manage'],
+        ['route' => 'accounts-payable.index', 'label' => '應付帳款', 'pattern' => 'accounts-payable.*', 'permission' => 'finance.manage'],
+        ['route' => 'barcode-labels.index', 'label' => '條碼列印', 'pattern' => 'barcode-labels.*', 'permission' => 'barcode.manage'],
+        ['route' => 'barcode-scans.index', 'label' => '條碼掃描', 'pattern' => 'barcode-scans.*', 'permission' => 'barcode.manage'],
+        ['route' => 'product-imports.index', 'label' => '匯入商品', 'pattern' => 'product-imports.*', 'permission' => 'import.manage'],
+        ['route' => 'excel-exports.index', 'label' => '匯出 Excel', 'pattern' => 'excel-exports.*', 'permission' => 'export.manage'],
+        ['route' => 'roles.index', 'label' => '角色管理', 'pattern' => 'roles.*', 'permission' => 'permissions.manage'],
+        ['route' => 'user-access.index', 'label' => '使用者權限', 'pattern' => 'user-access.*', 'permission' => 'permissions.manage'],
     ];
+
+    $navigationLinks = array_values(array_filter($navigationLinks, static function (array $link): bool {
+        if (($link['permission'] ?? null) === null) {
+            return true;
+        }
+
+        return auth()->user()?->hasPermission($link['permission']) ?? false;
+    }));
 @endphp
 
 <nav x-data="{ open: false }" class="border-b border-gray-100 bg-white">

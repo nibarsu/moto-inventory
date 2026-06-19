@@ -560,6 +560,50 @@ Note:
 
 - belongs to creator `User`
 
+## Security Tables
+
+### `roles`
+
+- `id`
+- `code` unique, max 50
+- `name` max 100
+- `remark` nullable text
+- `is_active` boolean, default true
+- timestamps
+
+### `permissions`
+
+- `id`
+- `code` unique, max 100
+- `name` max 100
+- `group_key` max 50
+- `remark` nullable text
+- `is_system` boolean, default true
+- timestamps
+
+### `permission_role`
+
+- `id`
+- `role_id` FK -> `roles.id`, `cascadeOnDelete`
+- `permission_id` FK -> `permissions.id`, `cascadeOnDelete`
+- unique key on `role_id + permission_id`
+
+### `role_user`
+
+- `id`
+- `role_id` FK -> `roles.id`, `cascadeOnDelete`
+- `user_id` FK -> `users.id`, `cascadeOnDelete`
+- unique key on `role_id + user_id`
+
+### `Role`
+
+- belongs to many `Permission`
+- belongs to many `User`
+
+### `Permission`
+
+- belongs to many `Role`
+
 ## Known Design Gaps
 
 - Barcode printing does not introduce new tables; it uses existing `parts.barcode`, `parts.part_no`, `vehicles.barcode`, and `vehicles.model_code`.

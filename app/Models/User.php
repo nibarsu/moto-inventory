@@ -4,9 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -16,6 +18,29 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class)->orderBy('name');
+    }
+
+    public function permissions(): Collection
+    {
+        return $this->roles()
+            ->with('permissions')
+            ->get()
+            ->pluck('permissions')
+            ->flatten()
+            ->unique('id');
+    }
+
+    public function hasPermission(string $permissionCode): bool
+    {
+        return $this->roles()
+            ->where('is_active', true)
+            ->whereHas('permissions', fn ($builder) => $builder->where('code', $permissionCode))
+            ->exists();
+    }
 
     /**
      * Get the attributes that should be cast.

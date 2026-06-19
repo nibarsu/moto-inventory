@@ -302,6 +302,18 @@
 - If a filter does not apply to the selected dataset, the system ignores it.
 - Export logs must preserve export type, filename, row count, and applied filters.
 
+## Security Rules
+
+### Permission Management
+
+- Permission management uses `roles`, `permissions`, `role_user`, and `permission_role`.
+- Users may have multiple roles.
+- Roles may include multiple permissions.
+- Route access is controlled by permission middleware.
+- Existing users are assigned to the default `admin` role during initial permission migration.
+- The default `admin` role includes all system permissions.
+- The default `admin` role cannot be deleted from the UI.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
