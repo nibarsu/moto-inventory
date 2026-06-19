@@ -11,6 +11,7 @@ use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrderItemController;
 use App\Http\Controllers\PurchaseReportController;
 use App\Http\Controllers\PurchaseReceiptController;
+use App\Http\Controllers\RepairOrderController;
 use App\Http\Controllers\SalesOrderController;
 use App\Http\Controllers\SalesReportController;
 use App\Http\Controllers\SalesOrderItemController;
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('purchase-orders.items', PurchaseOrderItemController::class)->except(['show']);
     Route::get('purchase-reports', [PurchaseReportController::class, 'index'])->name('purchase-reports.index');
     Route::resource('purchase-receipts', PurchaseReceiptController::class)->except(['destroy']);
+    Route::resource('repair-orders', RepairOrderController::class);
     Route::resource('sales-orders', SalesOrderController::class);
     Route::resource('sales-orders.items', SalesOrderItemController::class)->except(['show']);
     Route::get('sales-reports', [SalesReportController::class, 'index'])->name('sales-reports.index');

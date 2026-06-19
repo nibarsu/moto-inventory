@@ -195,8 +195,24 @@
 - Sales report totals are calculated from filtered shipment lines.
 - Sales report must preserve actual shipped quantity and actual sales amount.
 
+## Repair Rules
+
+### Repair Order
+
+- Repair order number must be unique.
+- Repair order requires order date, customer, and status.
+- Supported statuses:
+  - `open`
+  - `in_progress`
+  - `completed`
+  - `cancelled`
+- `vehicle_id` is optional because intake may happen before the vehicle master is linked.
+- `plate_no` and `mileage` are optional intake fields.
+- Complaint, diagnosis, and remark are free-text notes and may be updated as work progresses.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
 - Export features are not implemented yet.
+- Repair order line items and maintenance history are not implemented yet.

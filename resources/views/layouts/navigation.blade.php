@@ -19,6 +19,7 @@
         ['route' => 'sales-orders.index', 'label' => '銷貨單管理', 'pattern' => 'sales-orders.*'],
         ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*'],
         ['route' => 'sales-reports.index', 'label' => '銷貨報表', 'pattern' => 'sales-reports.*'],
+        ['route' => 'repair-orders.index', 'label' => '維修工單', 'pattern' => 'repair-orders.*'],
     ];
 @endphp
 

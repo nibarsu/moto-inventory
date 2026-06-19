@@ -9,6 +9,7 @@ The database is currently organized around:
 - stock tables
 - purchase tables
 - sales tables
+- repair tables
 
 Laravel default tables such as `users`, `cache`, and `jobs` are also present.
 
@@ -278,6 +279,24 @@ Note:
 - `remark` nullable
 - timestamps
 
+## Repair Tables
+
+### `repair_orders`
+
+- `id`
+- `wo_no` unique, max 30
+- `order_date` date
+- `customer_id` FK -> `customers.id`, `restrictOnDelete`
+- `vehicle_id` nullable FK -> `vehicles.id`, `nullOnDelete`
+- `plate_no` nullable, max 20
+- `mileage` nullable unsigned integer
+- `status` string(20), default `open`
+- `complaint` nullable text
+- `diagnosis` nullable text
+- `remark` nullable text
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
 ## Implemented Model Relationships
 
 ### `Part`
@@ -368,6 +387,12 @@ Note:
 - belongs to `SalesShipment`
 - belongs to `SalesOrderItem`
 
+### `RepairOrder`
+
+- belongs to `Customer`
+- belongs to `Vehicle`
+- belongs to creator `User`
+
 ### Sales Reporting Read Model
 
 - Source header table: `sales_shipments`
@@ -403,6 +428,8 @@ Note:
 - `sales_orders` -> `sales_order_items`
 - `sales_orders` -> `sales_shipments`
 - `sales_shipments` -> `sales_shipment_items`
+- `customers` -> `repair_orders`
+- `vehicles` -> `repair_orders`
 
 ## Known Design Gaps
 

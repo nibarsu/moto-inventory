@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, and sales stock-out posting.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, and repair work order management.
 
 ## Current Stack
 
@@ -44,6 +44,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Sales Order Item
 - Sales Shipment
 - Sales Report
+- Repair Order
 
 ## Functional Scope
 
@@ -62,6 +63,7 @@ The current system provides:
 - Sales order header and line maintenance
 - Sales stock-out posting with inventory deduction and stock movement logging
 - Sales report based on actual shipment transactions
+- Repair work order header management for after-sales service intake
 
 ## Main Domain Objects
 
@@ -83,6 +85,7 @@ The current system provides:
 - `SalesOrderItem`: sales order line item snapshot
 - `SalesShipment`: sales stock-out header
 - `SalesShipmentItem`: sales stock-out line snapshot
+- `RepairOrder`: repair work order header
 
 ## Route Structure
 
@@ -100,6 +103,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `sales-orders`
 - `sales-orders.items`
 - `sales-shipments`
+- `repair-orders`
 - `suppliers`
 - `vehicles`
 - `warehouses`
@@ -124,6 +128,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Inventory report is a read model composed from `part_stocks` / `vehicle_stocks` plus product masters.
 - Purchase report is a read model composed from `purchase_receipts` / `purchase_receipt_items`.
 - Sales report is a read model composed from `sales_shipments` / `sales_shipment_items`.
+- Repair workflow currently covers work order header intake only.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes
