@@ -546,6 +546,20 @@ Note:
 
 - belongs to creator `User`
 
+### `excel_export_logs`
+
+- `id`
+- `export_type` string(50)
+- `filename` string(255)
+- `row_count` unsigned integer, default 0
+- `filter_summary` nullable json
+- `created_by` nullable FK -> `users.id`, `nullOnDelete`
+- timestamps
+
+### `ExcelExportLog`
+
+- belongs to creator `User`
+
 ## Known Design Gaps
 
 - Barcode printing does not introduce new tables; it uses existing `parts.barcode`, `parts.part_no`, `vehicles.barcode`, and `vehicles.model_code`.

@@ -6,6 +6,7 @@ use App\Http\Controllers\BarcodeScanController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ExcelExportController;
 use App\Http\Controllers\InventoryReportController;
 use App\Http\Controllers\MaintenanceRecordController;
 use App\Http\Controllers\OwnerHistoryController;
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('customers', CustomerController::class);
+    Route::resource('excel-exports', ExcelExportController::class)->only(['index', 'store', 'show']);
     Route::get('inventory-reports', [InventoryReportController::class, 'index'])->name('inventory-reports.index');
     Route::resource('accounts-receivable', ReceivableController::class);
     Route::resource('accounts-payable', PayableController::class);

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, owner service history lookup, manual accounts receivable tracking, manual accounts payable tracking, barcode label printing, barcode scanning lookup, and product CSV import.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, owner service history lookup, manual accounts receivable tracking, manual accounts payable tracking, barcode label printing, barcode scanning lookup, product CSV import, and Excel export.
 
 ## Current Stack
 
@@ -52,6 +52,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Barcode Printing
 - Barcode Scanning
 - Product Import
+- Excel Export
 
 ## Functional Scope
 
@@ -78,6 +79,7 @@ The current system provides:
 - Barcode label printing for part and vehicle master data
 - Barcode scanning lookup by camera or manual input
 - Product CSV import with import logs
+- Excel export center with export logs
 
 ## Main Domain Objects
 
@@ -139,6 +141,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `GET /barcode-labels`
 - `GET /barcode-scans`
 - `GET /product-imports`
+- `GET /excel-exports`
 - `GET /stocks`
 - `GET /stock-movements`
 - `GET /stocks/adjust`
@@ -161,6 +164,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Barcode printing uses existing product barcode values and falls back to part no / model code when barcode is blank.
 - Barcode scanning uses browser-native APIs when available and falls back to manual barcode input.
 - Product import uses CSV upload, master-code mapping, and import log history for auditability.
+- Excel export uses SpreadsheetML `.xls` output without adding external spreadsheet packages.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes

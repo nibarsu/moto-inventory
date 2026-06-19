@@ -294,11 +294,18 @@
 - `brand_code` and `category_code` must match existing master data when provided.
 - Import logs must preserve total rows, created rows, updated rows, skipped rows, and row-level errors.
 
+### Excel Export
+
+- Excel export is available for master data lists and selected reports.
+- Export format is Excel-compatible `.xls`.
+- Export may apply optional filters depending on dataset type.
+- If a filter does not apply to the selected dataset, the system ignores it.
+- Export logs must preserve export type, filename, row count, and applied filters.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
-- Export features are not implemented yet.
 - Repair order line items are not implemented yet.
 - Accounts receivable is not auto-generated from sales documents yet.
 - Accounts payable is not auto-generated from purchase documents yet.

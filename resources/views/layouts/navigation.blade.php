@@ -19,6 +19,7 @@
         ['route' => 'barcode-labels.index', 'label' => '條碼列印', 'pattern' => 'barcode-labels.*'],
         ['route' => 'barcode-scans.index', 'label' => '條碼掃描', 'pattern' => 'barcode-scans.*'],
         ['route' => 'product-imports.index', 'label' => '匯入商品', 'pattern' => 'product-imports.*'],
+        ['route' => 'excel-exports.index', 'label' => '匯出 Excel', 'pattern' => 'excel-exports.*'],
         ['route' => 'sales-orders.index', 'label' => '銷貨單管理', 'pattern' => 'sales-orders.*'],
         ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*'],
         ['route' => 'sales-reports.index', 'label' => '銷貨報表', 'pattern' => 'sales-reports.*'],
