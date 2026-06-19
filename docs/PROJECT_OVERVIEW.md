@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, and maintenance history intake.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, and owner service history lookup.
 
 ## Current Stack
 
@@ -46,6 +46,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Sales Report
 - Repair Order
 - Maintenance Record
+- Owner History
 
 ## Functional Scope
 
@@ -66,6 +67,7 @@ The current system provides:
 - Sales report based on actual shipment transactions
 - Repair work order header management for after-sales service intake
 - Maintenance record intake with optional linkage to repair work orders
+- Owner history lookup across repair and maintenance records
 
 ## Main Domain Objects
 
@@ -89,6 +91,7 @@ The current system provides:
 - `SalesShipmentItem`: sales stock-out line snapshot
 - `RepairOrder`: repair work order header
 - `MaintenanceRecord`: maintenance history header
+- `OwnerHistory`: combined read model for owner service timeline
 
 ## Route Structure
 
@@ -118,6 +121,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `GET /inventory-reports`
 - `GET /purchase-reports`
 - `GET /sales-reports`
+- `GET /owner-histories`
 - `GET /stocks`
 - `GET /stock-movements`
 - `GET /stocks/adjust`
@@ -134,6 +138,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Sales report is a read model composed from `sales_shipments` / `sales_shipment_items`.
 - Repair workflow currently covers work order header intake only.
 - Maintenance workflow currently covers record header intake only.
+- Owner history is a combined read model built from repair orders and maintenance records.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes

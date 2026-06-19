@@ -422,6 +422,22 @@ Note:
 - belongs to `RepairOrder`
 - belongs to creator `User`
 
+### Owner History Read Model
+
+- No dedicated table
+- Source tables:
+  - `repair_orders`
+  - `maintenance_records`
+- Common filters:
+  - customer
+  - keyword
+- Keyword can match:
+  - customer name
+  - customer phone / mobile
+  - plate number
+  - record number
+  - complaint / diagnosis / service content
+
 ### Sales Reporting Read Model
 
 - Source header table: `sales_shipments`

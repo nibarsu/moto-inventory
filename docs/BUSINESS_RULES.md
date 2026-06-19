@@ -220,6 +220,18 @@
 - `plate_no`, `mileage`, and `next_service_mileage` are optional fields.
 - Service content and remark are free-text notes.
 
+### Owner History
+
+- Owner history is read-only.
+- Owner history combines:
+  - repair orders
+  - maintenance records
+- Owner history can filter by:
+  - customer
+  - keyword
+- Owner history sorts records by newest service date first.
+- Owner history is intended for service lookup, not financial settlement.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.
