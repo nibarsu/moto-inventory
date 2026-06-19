@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AverageCostController;
+use App\Http\Controllers\BarcodeLabelController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
@@ -36,6 +37,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('average-costs', [AverageCostController::class, 'index'])->name('average-costs.index');
+    Route::get('barcode-labels', [BarcodeLabelController::class, 'index'])->name('barcode-labels.index');
+    Route::post('barcode-labels/print', [BarcodeLabelController::class, 'print'])->name('barcode-labels.print');
     Route::resource('brands', BrandController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('customers', CustomerController::class);

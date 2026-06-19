@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, owner service history lookup, manual accounts receivable tracking, and manual accounts payable tracking.
+This project is a Laravel 12 motorcycle dealership inventory and operations system. It currently covers master data, stock foundation, inventory reporting, purchasing, purchase reporting, average cost tracking, sales order entry, sales reporting, sales stock-out posting, repair work order management, maintenance history intake, owner service history lookup, manual accounts receivable tracking, manual accounts payable tracking, and barcode label printing.
 
 ## Current Stack
 
@@ -49,6 +49,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Owner History
 - Accounts Receivable
 - Accounts Payable
+- Barcode Printing
 
 ## Functional Scope
 
@@ -72,6 +73,7 @@ The current system provides:
 - Owner history lookup across repair and maintenance records
 - Manual accounts receivable maintenance for customer balances
 - Manual accounts payable maintenance for supplier balances
+- Barcode label printing for part and vehicle master data
 
 ## Main Domain Objects
 
@@ -130,6 +132,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `GET /purchase-reports`
 - `GET /sales-reports`
 - `GET /owner-histories`
+- `GET /barcode-labels`
 - `GET /stocks`
 - `GET /stock-movements`
 - `GET /stocks/adjust`
@@ -149,6 +152,7 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Owner history is a combined read model built from repair orders and maintenance records.
 - Accounts receivable currently uses manual entry and status derived from total / received amount.
 - Accounts payable currently uses manual entry and status derived from total / paid amount.
+- Barcode printing uses existing product barcode values and falls back to part no / model code when barcode is blank.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
 
 ## Maintenance Notes

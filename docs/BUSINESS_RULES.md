@@ -256,14 +256,27 @@
 - Status is derived automatically:
   - `open`: no payment paid
   - `partial`: partial payment paid
-  - `paid`: paid amount covers total amount
-  - `void`: total amount is zero
+- `paid`: paid amount covers total amount
+- `void`: total amount is zero
 - `source_type` and `source_id` are optional reference fields.
+
+## Utility Rules
+
+### Barcode Printing
+
+- Barcode printing supports both parts and vehicles.
+- The printed barcode value uses the product `barcode` field first.
+- If `barcode` is empty, the system falls back to:
+  - part: `part_no`
+  - vehicle: `model_code`
+- Barcode preview is read-only and does not change any business data.
+- Users can print multiple copies of the same product label in one batch.
 
 ## Current Limitations
 
 - Stock reservation is not implemented.
 - Shipment reversal / delete flow is not implemented.
+- Barcode scanning is not implemented yet.
 - Export features are not implemented yet.
 - Repair order line items are not implemented yet.
 - Accounts receivable is not auto-generated from sales documents yet.
