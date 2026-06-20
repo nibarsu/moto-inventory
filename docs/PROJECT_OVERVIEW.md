@@ -23,6 +23,8 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - [DEVELOPMENT_RULES.md](/c:/laragon/www/moto-inventory/docs/DEVELOPMENT_RULES.md)
 - [ROADMAP.md](/c:/laragon/www/moto-inventory/docs/ROADMAP.md)
 - [USER_MANUAL.md](/c:/laragon/www/moto-inventory/docs/USER_MANUAL.md)
+- [WINDOWS_PRODUCTION_INSTALL.md](/c:/laragon/www/moto-inventory/docs/WINDOWS_PRODUCTION_INSTALL.md)
+- [.env.production.example](/c:/laragon/www/moto-inventory/.env.production.example)
 
 ## Completed Modules
 
