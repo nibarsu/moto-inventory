@@ -1,44 +1,43 @@
 @php
+    $user = auth()->user();
+
     $navigationLinks = [
-        ['route' => 'dashboard', 'label' => __('Dashboard'), 'pattern' => 'dashboard', 'permission' => null],
-        ['route' => 'brands.index', 'label' => '品牌管理', 'pattern' => 'brands.*', 'permission' => 'brands.manage'],
-        ['route' => 'categories.index', 'label' => '商品分類', 'pattern' => 'categories.*', 'permission' => 'categories.manage'],
-        ['route' => 'parts.index', 'label' => '零件商品管理', 'pattern' => 'parts.*', 'permission' => 'parts.manage'],
-        ['route' => 'vehicles.index', 'label' => '整車商品管理', 'pattern' => 'vehicles.*', 'permission' => 'vehicles.manage'],
-        ['route' => 'warehouses.index', 'label' => '倉庫管理', 'pattern' => 'warehouses.*', 'permission' => 'warehouses.manage'],
-        ['route' => 'suppliers.index', 'label' => '供應商管理', 'pattern' => 'suppliers.*', 'permission' => 'suppliers.manage'],
-        ['route' => 'customers.index', 'label' => '客戶管理', 'pattern' => 'customers.*', 'permission' => 'customers.manage'],
-        ['route' => 'stocks.index', 'label' => '庫存查詢', 'pattern' => 'stocks.index', 'permission' => 'stocks.manage'],
-        ['route' => 'stock-movements.index', 'label' => '庫存異動', 'pattern' => 'stock-movements.index', 'permission' => 'stocks.manage'],
-        ['route' => 'stocks.adjust', 'label' => '庫存調整', 'pattern' => 'stocks.adjust', 'permission' => 'stocks.manage'],
-        ['route' => 'inventory-reports.index', 'label' => '庫存報表', 'pattern' => 'inventory-reports.*', 'permission' => 'stocks.manage'],
-        ['route' => 'average-costs.index', 'label' => '平均成本', 'pattern' => 'average-costs.*', 'permission' => 'stocks.manage'],
-        ['route' => 'purchase-orders.index', 'label' => '進貨單管理', 'pattern' => 'purchase-orders.*', 'permission' => 'purchase.manage'],
-        ['route' => 'purchase-receipts.index', 'label' => '進貨入庫', 'pattern' => 'purchase-receipts.*', 'permission' => 'purchase.manage'],
-        ['route' => 'purchase-reports.index', 'label' => '進貨報表', 'pattern' => 'purchase-reports.*', 'permission' => 'purchase.manage'],
-        ['route' => 'sales-orders.index', 'label' => '銷貨單管理', 'pattern' => 'sales-orders.*', 'permission' => 'sales.manage'],
-        ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*', 'permission' => 'sales.manage'],
-        ['route' => 'sales-reports.index', 'label' => '銷貨報表', 'pattern' => 'sales-reports.*', 'permission' => 'sales.manage'],
-        ['route' => 'repair-orders.index', 'label' => '維修工單', 'pattern' => 'repair-orders.*', 'permission' => 'repairs.manage'],
-        ['route' => 'maintenance-records.index', 'label' => '保養紀錄', 'pattern' => 'maintenance-records.*', 'permission' => 'repairs.manage'],
-        ['route' => 'owner-histories.index', 'label' => '車主歷史紀錄', 'pattern' => 'owner-histories.*', 'permission' => 'repairs.manage'],
-        ['route' => 'accounts-receivable.index', 'label' => '應收帳款', 'pattern' => 'accounts-receivable.*', 'permission' => 'finance.manage'],
-        ['route' => 'accounts-payable.index', 'label' => '應付帳款', 'pattern' => 'accounts-payable.*', 'permission' => 'finance.manage'],
-        ['route' => 'barcode-labels.index', 'label' => '條碼列印', 'pattern' => 'barcode-labels.*', 'permission' => 'barcode.manage'],
-        ['route' => 'barcode-scans.index', 'label' => '條碼掃描', 'pattern' => 'barcode-scans.*', 'permission' => 'barcode.manage'],
-        ['route' => 'product-imports.index', 'label' => '匯入商品', 'pattern' => 'product-imports.*', 'permission' => 'import.manage'],
-        ['route' => 'excel-exports.index', 'label' => '匯出 Excel', 'pattern' => 'excel-exports.*', 'permission' => 'export.manage'],
-        ['route' => 'roles.index', 'label' => '角色管理', 'pattern' => 'roles.*', 'permission' => 'permissions.manage'],
-        ['route' => 'user-access.index', 'label' => '使用者權限', 'pattern' => 'user-access.*', 'permission' => 'permissions.manage'],
+        ['route' => 'dashboard', 'label' => __('Dashboard'), 'pattern' => 'dashboard', 'visible' => true],
+        ['route' => 'brands.index', 'label' => '品牌管理', 'pattern' => 'brands.*', 'visible' => $user?->hasPermission('brands.manage') ?? false],
+        ['route' => 'categories.index', 'label' => '商品分類', 'pattern' => 'categories.*', 'visible' => $user?->hasPermission('categories.manage') ?? false],
+        ['route' => 'parts.index', 'label' => '零件商品管理', 'pattern' => 'parts.*', 'visible' => $user?->hasPermission('parts.manage') ?? false],
+        ['route' => 'vehicles.index', 'label' => '整車商品管理', 'pattern' => 'vehicles.*', 'visible' => $user?->hasPermission('vehicles.manage') ?? false],
+        ['route' => 'warehouses.index', 'label' => '倉庫管理', 'pattern' => 'warehouses.*', 'visible' => $user?->hasPermission('warehouses.manage') ?? false],
+        ['route' => 'suppliers.index', 'label' => '供應商管理', 'pattern' => 'suppliers.*', 'visible' => $user?->hasPermission('suppliers.manage') ?? false],
+        ['route' => 'customers.index', 'label' => '客戶管理', 'pattern' => 'customers.*', 'visible' => $user?->hasPermission('customers.manage') ?? false],
+        ['route' => 'stocks.index', 'label' => '庫存查詢', 'pattern' => 'stocks.index', 'visible' => $user?->hasPermission('stocks.manage') ?? false],
+        ['route' => 'stock-movements.index', 'label' => '庫存異動', 'pattern' => 'stock-movements.index', 'visible' => $user?->hasPermission('stocks.manage') ?? false],
+        ['route' => 'stocks.adjust', 'label' => '庫存調整', 'pattern' => 'stocks.adjust', 'visible' => $user?->hasPermission('stocks.manage') ?? false],
+        ['route' => 'inventory-reports.index', 'label' => '庫存報表', 'pattern' => 'inventory-reports.*', 'visible' => $user?->hasPermission('stocks.manage') ?? false],
+        ['route' => 'average-costs.index', 'label' => '平均成本', 'pattern' => 'average-costs.*', 'visible' => $user?->hasPermission('stocks.manage') ?? false],
+        ['route' => 'quick-purchases.create', 'label' => '快速進貨單', 'pattern' => 'quick-purchases.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
+        ['route' => 'purchase-orders.index', 'label' => '完整進貨單', 'pattern' => 'purchase-orders.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
+        ['route' => 'purchase-receipts.index', 'label' => '進貨入庫', 'pattern' => 'purchase-receipts.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
+        ['route' => 'purchase-reports.index', 'label' => '進貨報表', 'pattern' => 'purchase-reports.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
+        ['route' => 'quick-sales.create', 'label' => '快速出貨單', 'pattern' => 'quick-sales.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
+        ['route' => 'sales-orders.index', 'label' => '完整出貨單', 'pattern' => 'sales-orders.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
+        ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
+        ['route' => 'sales-reports.index', 'label' => '銷貨報表', 'pattern' => 'sales-reports.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
+        ['route' => 'transaction-reports.index', 'label' => '交易報表', 'pattern' => 'transaction-reports.*', 'visible' => ($user?->hasPermission('purchase.manage') ?? false) || ($user?->hasPermission('sales.manage') ?? false)],
+        ['route' => 'repair-orders.index', 'label' => '維修工單', 'pattern' => 'repair-orders.*', 'visible' => $user?->hasPermission('repairs.manage') ?? false],
+        ['route' => 'maintenance-records.index', 'label' => '保養紀錄', 'pattern' => 'maintenance-records.*', 'visible' => $user?->hasPermission('repairs.manage') ?? false],
+        ['route' => 'owner-histories.index', 'label' => '車主歷史紀錄', 'pattern' => 'owner-histories.*', 'visible' => $user?->hasPermission('repairs.manage') ?? false],
+        ['route' => 'accounts-receivable.index', 'label' => '應收帳款', 'pattern' => 'accounts-receivable.*', 'visible' => $user?->hasPermission('finance.manage') ?? false],
+        ['route' => 'accounts-payable.index', 'label' => '應付帳款', 'pattern' => 'accounts-payable.*', 'visible' => $user?->hasPermission('finance.manage') ?? false],
+        ['route' => 'barcode-labels.index', 'label' => '條碼列印', 'pattern' => 'barcode-labels.*', 'visible' => $user?->hasPermission('barcode.manage') ?? false],
+        ['route' => 'barcode-scans.index', 'label' => '條碼掃描', 'pattern' => 'barcode-scans.*', 'visible' => $user?->hasPermission('barcode.manage') ?? false],
+        ['route' => 'product-imports.index', 'label' => '匯入商品', 'pattern' => 'product-imports.*', 'visible' => $user?->hasPermission('import.manage') ?? false],
+        ['route' => 'excel-exports.index', 'label' => '匯出 Excel', 'pattern' => 'excel-exports.*', 'visible' => $user?->hasPermission('export.manage') ?? false],
+        ['route' => 'roles.index', 'label' => '角色管理', 'pattern' => 'roles.*', 'visible' => $user?->hasPermission('permissions.manage') ?? false],
+        ['route' => 'user-access.index', 'label' => '使用者權限', 'pattern' => 'user-access.*', 'visible' => $user?->hasPermission('permissions.manage') ?? false],
     ];
 
-    $navigationLinks = array_values(array_filter($navigationLinks, static function (array $link): bool {
-        if (($link['permission'] ?? null) === null) {
-            return true;
-        }
-
-        return auth()->user()?->hasPermission($link['permission']) ?? false;
-    }));
+    $navigationLinks = array_values(array_filter($navigationLinks, static fn (array $link): bool => $link['visible']));
 @endphp
 
 <nav x-data="{ open: false }" class="border-b border-gray-100 bg-white">

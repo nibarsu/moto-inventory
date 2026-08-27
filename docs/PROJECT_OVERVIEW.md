@@ -42,10 +42,13 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Purchase Receipt
 - Purchase Report
 - Average Cost Calculation
+- Quick Purchase Entry
 - Sales Order
 - Sales Order Item
 - Sales Shipment
 - Sales Report
+- Quick Sales Entry
+- Transaction Report
 - Repair Order
 - Maintenance Record
 - Owner History
@@ -68,12 +71,15 @@ The current system provides:
 - Stock adjustment and stock movement history
 - Inventory report with stock value visibility
 - Purchase order header and line maintenance
+- Quick purchase entry with supplier and product auto-create by typed names
 - Purchase receiving with stock-in posting and receipt history
 - Purchase report based on actual receipt transactions
 - Average cost tracking for parts and vehicles
 - Sales order header and line maintenance
+- Quick sales entry with customer and product auto-create by typed names
 - Sales stock-out posting with inventory deduction and stock movement logging
 - Sales report based on actual shipment transactions
+- Cross-transaction report for purchase and sales documents
 - Repair work order header management for after-sales service intake
 - Maintenance record intake with optional linkage to repair work orders
 - Owner history lookup across repair and maintenance records
@@ -101,6 +107,7 @@ The current system provides:
 - `PurchaseOrderItem`: purchase order line item snapshot
 - `PurchaseReceipt`: purchase receiving header
 - `PurchaseReceiptItem`: purchase receiving line snapshot
+- `QuickTransaction`: simplified entry workflow backed by the existing purchase and sales tables
 - `SalesOrder`: sales order header/master
 - `SalesOrderItem`: sales order line item snapshot
 - `SalesShipment`: sales stock-out header
@@ -142,7 +149,12 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - `GET /average-costs`
 - `GET /inventory-reports`
 - `GET /purchase-reports`
+- `GET /quick-purchases/create`
+- `POST /quick-purchases`
+- `GET /quick-sales/create`
+- `POST /quick-sales`
 - `GET /sales-reports`
+- `GET /transaction-reports`
 - `GET /owner-histories`
 - `GET /barcode-labels`
 - `GET /barcode-scans`
@@ -175,6 +187,9 @@ All management routes are registered in [routes/web.php](/c:/laragon/www/moto-in
 - Excel export uses SpreadsheetML `.xls` output without adding external spreadsheet packages.
 - Permission management uses role-based access control with per-module route middleware.
 - Sales workflow now covers order headers, order lines, and stock-out posting.
+- Quick transaction workflow creates missing supplier, customer, and part master data automatically from typed names.
+- Quick purchase submits one form but writes both purchase order and purchase receipt records.
+- Quick sales submits one form but writes both sales order and sales shipment records.
 
 ## Maintenance Notes
 

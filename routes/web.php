@@ -18,6 +18,7 @@ use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrderItemController;
 use App\Http\Controllers\PurchaseReceiptController;
 use App\Http\Controllers\PurchaseReportController;
+use App\Http\Controllers\QuickTransactionController;
 use App\Http\Controllers\ReceivableController;
 use App\Http\Controllers\RepairOrderController;
 use App\Http\Controllers\RoleController;
@@ -41,6 +42,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('lookups/suppliers', [QuickTransactionController::class, 'supplierLookup'])->name('lookups.suppliers');
+    Route::get('lookups/customers', [QuickTransactionController::class, 'customerLookup'])->name('lookups.customers');
+    Route::get('lookups/products', [QuickTransactionController::class, 'productLookup'])->name('lookups.products');
+    Route::get('transaction-reports', [QuickTransactionController::class, 'report'])->name('transaction-reports.index');
+
     Route::middleware('permission:brands.manage')->group(function () {
         Route::resource('brands', BrandController::class);
     });
@@ -79,6 +85,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('permission:purchase.manage')->group(function () {
+        Route::get('quick-purchases/create', [QuickTransactionController::class, 'createPurchase'])->name('quick-purchases.create');
+        Route::post('quick-purchases', [QuickTransactionController::class, 'storePurchase'])->name('quick-purchases.store');
+        Route::get('quick-purchases/{purchaseReceipt}', [QuickTransactionController::class, 'showPurchase'])->name('quick-purchases.show');
+        Route::get('quick-purchases/{purchaseReceipt}/print', [QuickTransactionController::class, 'printPurchase'])->name('quick-purchases.print');
         Route::resource('purchase-orders', PurchaseOrderController::class);
         Route::resource('purchase-orders.items', PurchaseOrderItemController::class)->except(['show']);
         Route::resource('purchase-receipts', PurchaseReceiptController::class)->except(['destroy']);
@@ -86,6 +96,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('permission:sales.manage')->group(function () {
+        Route::get('quick-sales/create', [QuickTransactionController::class, 'createSale'])->name('quick-sales.create');
+        Route::post('quick-sales', [QuickTransactionController::class, 'storeSale'])->name('quick-sales.store');
+        Route::get('quick-sales/{salesShipment}', [QuickTransactionController::class, 'showSale'])->name('quick-sales.show');
+        Route::get('quick-sales/{salesShipment}/print', [QuickTransactionController::class, 'printSale'])->name('quick-sales.print');
         Route::resource('sales-orders', SalesOrderController::class);
         Route::resource('sales-orders.items', SalesOrderItemController::class)->except(['show']);
         Route::resource('sales-shipments', SalesShipmentController::class)->except(['destroy']);

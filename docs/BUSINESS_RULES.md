@@ -27,12 +27,14 @@
 - Supplier code must be unique.
 - Supplier name is required.
 - Email is optional but must be valid if provided.
+- Quick purchase entry may auto-create a supplier when a typed supplier name does not already exist.
 
 ### Customer
 
 - Customer code must be unique.
 - Customer name is required.
 - Email is optional but must be valid if provided.
+- Quick sales entry may auto-create a customer when a typed customer name does not already exist.
 
 ## Product Rules
 
@@ -123,6 +125,15 @@
 - Receipt posting updates `received_quantity` on purchase order items.
 - Receipt posting updates `last_cost_price`.
 
+### Quick Purchase Entry
+
+- Quick purchase entry is intended for simplified one-step receiving.
+- User may type supplier name directly instead of maintaining supplier master data first.
+- User may type product name directly instead of maintaining product master data first.
+- When the typed supplier or product name is new, the system auto-creates minimal master data.
+- Quick purchase creates a purchase order and matching purchase receipt in one transaction.
+- Quick purchase updates stock and cost data immediately.
+
 ### Purchase Report
 
 - Purchase report is read-only.
@@ -182,6 +193,15 @@
   - if all line items are fully shipped, sales order status becomes `completed`
   - otherwise sales order status becomes `confirmed`
 
+### Quick Sales Entry
+
+- Quick sales entry is intended for simplified one-step shipment.
+- User may type customer name directly instead of maintaining customer master data first.
+- User may type product name directly and reuse previously auto-created product masters.
+- When the typed customer or product name is new, the system auto-creates minimal master data.
+- Quick sales creates a sales order and matching sales shipment in one transaction.
+- Quick sales must still verify available stock before shipment is posted.
+
 ### Sales Report
 
 - Sales report is read-only.
@@ -194,6 +214,16 @@
   - keyword
 - Sales report totals are calculated from filtered shipment lines.
 - Sales report must preserve actual shipped quantity and actual sales amount.
+
+### Transaction Report
+
+- Transaction report is read-only.
+- Transaction report can filter by:
+  - party name
+  - type: all / purchase / sale
+  - date range
+- Default date range is the most recent one year.
+- Transaction report provides document lookup and A4 print entry points for quick purchase and quick sales documents.
 
 ## Repair Rules
 
