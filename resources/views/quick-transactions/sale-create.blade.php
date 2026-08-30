@@ -8,4 +8,5 @@
     'warehouses' => $warehouses,
     'submitLabel' => '建立出貨單',
     'defaultPriceField' => 'sale_price',
+    'documentType' => 'SALES SHIPMENT',
 ])

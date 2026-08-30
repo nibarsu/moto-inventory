@@ -8,4 +8,5 @@
     'warehouses' => $warehouses,
     'submitLabel' => '建立進貨單',
     'defaultPriceField' => 'last_cost_price',
+    'documentType' => 'PURCHASE RECEIPT',
 ])
