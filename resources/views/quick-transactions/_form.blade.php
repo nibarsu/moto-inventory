@@ -53,7 +53,7 @@
                             <select id="warehouse_id" name="warehouse_id" class="mt-1 block w-full border-0 border-b border-gray-300 bg-transparent px-0 text-sm shadow-none focus:border-indigo-500 focus:ring-0" required>
                                 <option value="">請選擇倉庫</option>
                                 @foreach ($warehouses as $warehouse)
-                                    <option value="{{ $warehouse->id }}" @selected((string) old('warehouse_id') === (string) $warehouse->id)>{{ $warehouse->name }}</option>
+                                    <option value="{{ $warehouse->id }}" @selected((string) old('warehouse_id', $defaultWarehouseId) === (string) $warehouse->id)>{{ $warehouse->name }}</option>
                                 @endforeach
                             </select>
                         </label>

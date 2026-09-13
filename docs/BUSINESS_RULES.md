@@ -128,6 +128,7 @@
 ### Quick Purchase Entry
 
 - Quick purchase entry is intended for simplified one-step receiving.
+- Quick purchase defaults to the active warehouse named `總倉庫` when it exists.
 - User may type supplier name directly instead of maintaining supplier master data first.
 - User may type product name directly instead of maintaining product master data first.
 - When the typed supplier or product name is new, the system auto-creates minimal master data.
@@ -196,6 +197,7 @@
 ### Quick Sales Entry
 
 - Quick sales entry is intended for simplified one-step shipment.
+- Quick sales defaults to the active warehouse named `總倉庫` when it exists.
 - User may type customer name directly instead of maintaining customer master data first.
 - User may type product name directly and reuse previously auto-created product masters.
 - When the typed customer or product name is new, the system auto-creates minimal master data.

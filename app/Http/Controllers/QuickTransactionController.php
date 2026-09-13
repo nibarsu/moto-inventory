@@ -21,9 +21,7 @@ class QuickTransactionController extends Controller
 
     public function createPurchase()
     {
-        return view('quick-transactions.purchase-create', [
-            'warehouses' => $this->warehouses(),
-        ]);
+        return view('quick-transactions.purchase-create', $this->quickTransactionFormData());
     }
 
     public function storePurchase(StoreQuickPurchaseRequest $request)
@@ -54,9 +52,7 @@ class QuickTransactionController extends Controller
 
     public function createSale()
     {
-        return view('quick-transactions.sale-create', [
-            'warehouses' => $this->warehouses(),
-        ]);
+        return view('quick-transactions.sale-create', $this->quickTransactionFormData());
     }
 
     public function storeSale(StoreQuickSaleRequest $request)
@@ -139,6 +135,16 @@ class QuickTransactionController extends Controller
             ->where('is_active', true)
             ->orderBy('name')
             ->get();
+    }
+
+    private function quickTransactionFormData(): array
+    {
+        $warehouses = $this->warehouses();
+
+        return [
+            'warehouses' => $warehouses,
+            'defaultWarehouseId' => $warehouses->firstWhere('name', '總倉庫')?->id,
+        ];
     }
 
     private function sanitizeItems(array $validated): array
