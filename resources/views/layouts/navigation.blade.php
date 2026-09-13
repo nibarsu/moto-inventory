@@ -1,8 +1,14 @@
 @php
     $user = auth()->user();
 
-    $navigationLinks = [
-        ['route' => 'dashboard', 'label' => __('Dashboard'), 'pattern' => 'dashboard', 'visible' => true],
+    $primaryLinks = [
+        ['route' => 'dashboard', 'label' => '日常作業', 'pattern' => 'dashboard', 'visible' => true],
+        ['route' => 'quick-purchases.create', 'label' => '快速進貨單', 'pattern' => 'quick-purchases.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
+        ['route' => 'quick-sales.create', 'label' => '快速出貨單', 'pattern' => 'quick-sales.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
+        ['route' => 'transaction-reports.index', 'label' => '交易報表', 'pattern' => 'transaction-reports.*', 'visible' => ($user?->hasPermission('purchase.manage') ?? false) || ($user?->hasPermission('sales.manage') ?? false)],
+    ];
+
+    $adminLinks = [
         ['route' => 'brands.index', 'label' => '品牌管理', 'pattern' => 'brands.*', 'visible' => $user?->hasPermission('brands.manage') ?? false],
         ['route' => 'categories.index', 'label' => '商品分類', 'pattern' => 'categories.*', 'visible' => $user?->hasPermission('categories.manage') ?? false],
         ['route' => 'parts.index', 'label' => '零件商品管理', 'pattern' => 'parts.*', 'visible' => $user?->hasPermission('parts.manage') ?? false],
@@ -15,15 +21,12 @@
         ['route' => 'stocks.adjust', 'label' => '庫存調整', 'pattern' => 'stocks.adjust', 'visible' => $user?->hasPermission('stocks.manage') ?? false],
         ['route' => 'inventory-reports.index', 'label' => '庫存報表', 'pattern' => 'inventory-reports.*', 'visible' => $user?->hasPermission('stocks.manage') ?? false],
         ['route' => 'average-costs.index', 'label' => '平均成本', 'pattern' => 'average-costs.*', 'visible' => $user?->hasPermission('stocks.manage') ?? false],
-        ['route' => 'quick-purchases.create', 'label' => '快速進貨單', 'pattern' => 'quick-purchases.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
-        ['route' => 'purchase-orders.index', 'label' => '完整進貨單', 'pattern' => 'purchase-orders.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
+        ['route' => 'purchase-orders.index', 'label' => '採購進貨單', 'pattern' => 'purchase-orders.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
         ['route' => 'purchase-receipts.index', 'label' => '進貨入庫', 'pattern' => 'purchase-receipts.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
         ['route' => 'purchase-reports.index', 'label' => '進貨報表', 'pattern' => 'purchase-reports.*', 'visible' => $user?->hasPermission('purchase.manage') ?? false],
-        ['route' => 'quick-sales.create', 'label' => '快速出貨單', 'pattern' => 'quick-sales.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
-        ['route' => 'sales-orders.index', 'label' => '完整出貨單', 'pattern' => 'sales-orders.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
+        ['route' => 'sales-orders.index', 'label' => '銷售出貨單', 'pattern' => 'sales-orders.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
         ['route' => 'sales-shipments.index', 'label' => '銷貨出庫', 'pattern' => 'sales-shipments.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
         ['route' => 'sales-reports.index', 'label' => '銷貨報表', 'pattern' => 'sales-reports.*', 'visible' => $user?->hasPermission('sales.manage') ?? false],
-        ['route' => 'transaction-reports.index', 'label' => '交易報表', 'pattern' => 'transaction-reports.*', 'visible' => ($user?->hasPermission('purchase.manage') ?? false) || ($user?->hasPermission('sales.manage') ?? false)],
         ['route' => 'repair-orders.index', 'label' => '維修工單', 'pattern' => 'repair-orders.*', 'visible' => $user?->hasPermission('repairs.manage') ?? false],
         ['route' => 'maintenance-records.index', 'label' => '保養紀錄', 'pattern' => 'maintenance-records.*', 'visible' => $user?->hasPermission('repairs.manage') ?? false],
         ['route' => 'owner-histories.index', 'label' => '車主歷史紀錄', 'pattern' => 'owner-histories.*', 'visible' => $user?->hasPermission('repairs.manage') ?? false],
@@ -37,7 +40,9 @@
         ['route' => 'user-access.index', 'label' => '使用者權限', 'pattern' => 'user-access.*', 'visible' => $user?->hasPermission('permissions.manage') ?? false],
     ];
 
-    $navigationLinks = array_values(array_filter($navigationLinks, static fn (array $link): bool => $link['visible']));
+    $primaryLinks = array_values(array_filter($primaryLinks, static fn (array $link): bool => $link['visible']));
+    $adminLinks = array_values(array_filter($adminLinks, static fn (array $link): bool => $link['visible']));
+    $adminIsActive = collect($adminLinks)->contains(static fn (array $link): bool => request()->routeIs($link['pattern']));
 @endphp
 
 <nav x-data="{ open: false }" class="border-b border-gray-100 bg-white">
@@ -58,7 +63,6 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition ease-in-out duration-150 hover:text-gray-700 focus:outline-none">
                             <div>{{ Auth::user()->name }}</div>
-
                             <div class="ms-1">
                                 <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -66,19 +70,11 @@
                             </div>
                         </button>
                     </x-slot>
-
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
+                        <x-dropdown-link :href="route('profile.edit')">{{ __('Profile') }}</x-dropdown-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Log Out') }}</x-dropdown-link>
                         </form>
                     </x-slot>
                 </x-dropdown>
@@ -97,43 +93,58 @@
 
     <div class="hidden border-t border-gray-100 bg-white sm:block">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap items-center gap-x-5 gap-y-2 py-3">
-                @foreach ($navigationLinks as $link)
-                    <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['pattern'])">
-                        {{ $link['label'] }}
-                    </x-nav-link>
+            <div class="flex items-center gap-x-5 py-3">
+                @foreach ($primaryLinks as $link)
+                    <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['pattern'])">{{ $link['label'] }}</x-nav-link>
                 @endforeach
+
+                @if ($adminLinks)
+                    <x-dropdown align="left" width="64">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center border-b-2 px-1 pb-1 pt-1 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none {{ $adminIsActive ? 'border-indigo-400 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }}">
+                                後台管理
+                                <svg class="ms-1 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                            </button>
+                        </x-slot>
+                        <x-slot name="content">
+                            <div class="max-h-[70vh] overflow-y-auto py-1">
+                                @foreach ($adminLinks as $link)
+                                    <x-dropdown-link :href="route($link['route'])" :class="request()->routeIs($link['pattern']) ? 'bg-gray-100 font-semibold' : ''">{{ $link['label'] }}</x-dropdown-link>
+                                @endforeach
+                            </div>
+                        </x-slot>
+                    </x-dropdown>
+                @endif
             </div>
         </div>
     </div>
 
     <div :class="{'block': open, 'hidden': ! open}" class="hidden border-t border-gray-200 bg-white sm:hidden">
         <div class="space-y-1 pb-3 pt-2">
-            @foreach ($navigationLinks as $link)
-                <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['pattern'])">
-                    {{ $link['label'] }}
-                </x-responsive-nav-link>
+            @foreach ($primaryLinks as $link)
+                <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['pattern'])">{{ $link['label'] }}</x-responsive-nav-link>
             @endforeach
         </div>
+
+        @if ($adminLinks)
+            <div class="border-t border-gray-200 py-3">
+                <div class="px-4 pb-2 text-xs font-semibold uppercase tracking-widest text-gray-500">後台管理</div>
+                @foreach ($adminLinks as $link)
+                    <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['pattern'])">{{ $link['label'] }}</x-responsive-nav-link>
+                @endforeach
+            </div>
+        @endif
 
         <div class="border-t border-gray-200 pb-1 pt-4">
             <div class="px-4">
                 <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
             </div>
-
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
+                <x-responsive-nav-link :href="route('profile.edit')">{{ __('Profile') }}</x-responsive-nav-link>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Log Out') }}</x-responsive-nav-link>
                 </form>
             </div>
         </div>
