@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQuickPurchaseRequest;
 use App\Http\Requests\StoreQuickSaleRequest;
 use App\Http\Requests\TransactionReportRequest;
+use App\Models\CompanySetting;
 use App\Models\PurchaseReceipt;
 use App\Models\SalesShipment;
 use App\Models\Warehouse;
@@ -45,7 +46,10 @@ class QuickTransactionController extends Controller
     {
         $purchaseReceipt->load(['supplier', 'warehouse', 'items']);
 
-        return view('quick-transactions.purchase-print', compact('purchaseReceipt'));
+        return view('quick-transactions.purchase-print', [
+            'purchaseReceipt' => $purchaseReceipt,
+            'companySetting' => CompanySetting::current(),
+        ]);
     }
 
     public function createSale()
@@ -75,7 +79,10 @@ class QuickTransactionController extends Controller
     {
         $salesShipment->load(['customer', 'warehouse', 'items']);
 
-        return view('quick-transactions.sale-print', compact('salesShipment'));
+        return view('quick-transactions.sale-print', [
+            'salesShipment' => $salesShipment,
+            'companySetting' => CompanySetting::current(),
+        ]);
     }
 
     public function report(TransactionReportRequest $request)

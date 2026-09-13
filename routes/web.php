@@ -5,6 +5,7 @@ use App\Http\Controllers\BarcodeLabelController;
 use App\Http\Controllers\BarcodeScanController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExcelExportController;
 use App\Http\Controllers\InventoryReportController;
@@ -133,6 +134,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('permission:permissions.manage')->group(function () {
+        Route::get('company-settings', [CompanySettingController::class, 'edit'])->name('company-settings.edit');
+        Route::put('company-settings', [CompanySettingController::class, 'update'])->name('company-settings.update');
         Route::resource('roles', RoleController::class);
         Route::get('user-access', [UserAccessController::class, 'index'])->name('user-access.index');
         Route::get('user-access/{user}/edit', [UserAccessController::class, 'edit'])->name('user-access.edit');

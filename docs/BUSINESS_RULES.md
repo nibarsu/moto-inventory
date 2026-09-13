@@ -344,6 +344,13 @@
 - The default `admin` role includes all system permissions.
 - The default `admin` role cannot be deleted from the UI.
 
+## Company Settings
+
+- The system maintains one company setting record for the business name.
+- Company name is required and limited to 100 characters.
+- The configured business name is displayed in the upper-left header of quick purchase and quick sales A4 print documents.
+- Company setting maintenance uses the existing permission management access control.
+
 ## Current Limitations
 
 - Stock reservation is not implemented.

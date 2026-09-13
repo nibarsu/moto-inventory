@@ -604,6 +604,18 @@ Note:
 
 - belongs to many `Role`
 
+## Company Configuration
+
+### `company_settings`
+
+- `id`: singleton row with `id = 1`
+- `name`: business name, max 100 characters
+- timestamps
+
+### `CompanySetting`
+
+- Stores the business name displayed at the upper-left of quick purchase and quick sales print documents.
+
 ## Known Design Gaps
 
 - Barcode printing does not introduce new tables; it uses existing `parts.barcode`, `parts.part_no`, `vehicles.barcode`, and `vehicles.model_code`.

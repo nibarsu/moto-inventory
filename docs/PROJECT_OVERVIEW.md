@@ -59,6 +59,7 @@ This project is a Laravel 12 motorcycle dealership inventory and operations syst
 - Product Import
 - Excel Export
 - Permission Management
+- Company Setting
 
 ## Functional Scope
 
@@ -90,6 +91,7 @@ The current system provides:
 - Product CSV import with import logs
 - Excel export center with export logs
 - Role-based permission management for users and modules
+- Company name configuration for document print headers
 
 ## Main Domain Objects
 
@@ -119,6 +121,7 @@ The current system provides:
 - `Payable`: accounts payable header
 - `Role`: user role master
 - `Permission`: system permission master
+- `CompanySetting`: single business name used on printed transaction documents
 
 ## Route Structure
 

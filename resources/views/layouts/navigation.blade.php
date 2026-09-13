@@ -9,6 +9,7 @@
     ];
 
     $adminLinks = [
+        ['route' => 'company-settings.edit', 'label' => '商家設定', 'pattern' => 'company-settings.*', 'visible' => $user?->hasPermission('permissions.manage') ?? false],
         ['route' => 'brands.index', 'label' => '品牌管理', 'pattern' => 'brands.*', 'visible' => $user?->hasPermission('brands.manage') ?? false],
         ['route' => 'categories.index', 'label' => '商品分類', 'pattern' => 'categories.*', 'visible' => $user?->hasPermission('categories.manage') ?? false],
         ['route' => 'parts.index', 'label' => '零件商品管理', 'pattern' => 'parts.*', 'visible' => $user?->hasPermission('parts.manage') ?? false],

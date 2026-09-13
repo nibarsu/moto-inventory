@@ -164,7 +164,7 @@
     <div class="sheet">
         <div class="company-row">
             <div>
-                <div class="company-name">{{ config('app.name', 'Moto Inventory') }}</div>
+                <div class="company-name">{{ $companySetting->name }}</div>
                 <div style="margin-top: 2px; color: var(--muted); font-size: 12px;">快速單據列印版</div>
             </div>
             <div class="doc-name">出貨單</div>
